@@ -1,0 +1,2190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>OSCE Prep Hub v4 — Muskan RN1</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f0f4f8;--surface:#ffffff;--surface2:#f7f9fb;--surface3:#edf1f5;
+  --border:#dde3ea;--border2:#c8d0db;
+  --em:#0ba87a;--em2:#089468;--em-dim:rgba(11,168,122,.1);--em-mid:rgba(11,168,122,.2);
+  --blue:#2575d0;--blue-dim:rgba(37,117,208,.1);
+  --amber:#d4860a;--amber-dim:rgba(212,134,10,.1);
+  --red:#d63b3b;--red-dim:rgba(214,59,59,.1);
+  --purple:#6d4dc4;--purple-dim:rgba(109,77,196,.1);
+  --ink:#1a2636;--muted:#5e7087;--faint:#8fa3b8;
+  --r:16px;--r2:12px;
+  --sec-practice:#0ba87a;--sec-study:#2575d0;--sec-track:#6d4dc4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:400;min-height:100vh;}
+
+/* ── TOP BAR ── */
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:200;height:52px;}
+.logo{font-family:'Fraunces',serif;font-size:16px;font-weight:900;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.logo span{color:var(--em);}
+.logo-sub{font-size:10px;color:var(--muted);font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:.5px;}
+
+/* ── SECTION SWITCHER ── */
+.sec-switcher{display:flex;gap:4px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:3px;}
+.sec-btn{border:0;border-radius:9px;padding:6px 14px;font:600 12px/1 'DM Sans',sans-serif;cursor:pointer;transition:.15s all;display:flex;align-items:center;gap:6px;color:var(--muted);background:transparent;}
+.sec-btn:hover{color:var(--ink);}
+.sec-btn.active-practice{background:var(--sec-practice);color:#fff;}
+.sec-btn.active-study{background:var(--sec-study);color:#fff;}
+.sec-btn.active-track{background:var(--sec-track);color:#fff;}
+
+/* ── HEADER STRIP ── */
+.section-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);background:#fff;}
+.section-header .inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.sec-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:700;}
+.sec-label.practice{color:var(--sec-practice);}
+.sec-label.study{color:var(--sec-study);}
+.sec-label.track{color:var(--sec-track);}
+.sec-title{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--ink);margin-top:3px;}
+.sec-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* ── SUB-NAV ── */
+.subnav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;}
+.subnav-inner{max-width:1280px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:6px 0;}
+.subnav-inner::-webkit-scrollbar{display:none}
+.subnav button{white-space:nowrap;background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;font:500 12px/1 'DM Sans',sans-serif;cursor:pointer;transition:.12s;display:flex;align-items:center;gap:5px;}
+.subnav button:hover{color:var(--ink);background:rgba(0,0,0,.04);}
+.subnav button.active{font-weight:600;}
+.subnav button.active.p{color:var(--sec-practice);background:var(--em-dim);}
+.subnav button.active.s{color:var(--sec-study);background:var(--blue-dim);}
+.subnav button.active.t{color:var(--sec-track);background:var(--purple-dim);}
+
+/* ── MAIN ── */
+main{max-width:1280px;margin:0 auto;padding:20px 24px;}
+.section-view{display:none;}
+.section-view.active{display:block;}
+section.tab{display:none;animation:fadeIn .18s ease;}
+section.tab.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:.15s border-color;}
+.card:hover{border-color:var(--border2);}
+.card h2{font-family:'Fraunces',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
+.card h3{font-family:'Fraunces',serif;font-size:16px;font-weight:700;margin-bottom:8px;}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+.sh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
+.sh h2{font-family:'Fraunces',serif;font-size:22px;font-weight:900;}
+.sh p{color:var(--muted);font-size:12px;margin-top:2px;}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:10px;padding:8px 14px;font:600 12px/1 'DM Sans',sans-serif;cursor:pointer;transition:.12s all;}
+.btn:hover{filter:brightness(.96);transform:translateY(-1px);}
+.btn-em{background:var(--em);color:#fff;}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-ghost{background:rgba(0,0,0,.04);color:var(--ink);border:1px solid var(--border);}
+.btn-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(214,59,59,.25);}
+.btn-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(212,134,10,.25);}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+
+/* ── PILLS ── */
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:600;}
+.pill-em{background:var(--em-dim);color:var(--em);}
+.pill-red{background:var(--red-dim);color:var(--red);}
+.pill-amber{background:var(--amber-dim);color:var(--amber);}
+.pill-blue{background:var(--blue-dim);color:var(--blue);}
+.pill-muted{background:rgba(0,0,0,.06);color:var(--muted);}
+.pill-purple{background:var(--purple-dim);color:var(--purple);}
+
+/* ── FORM ── */
+.field{display:grid;gap:5px;margin-bottom:10px;}
+.field label{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+input,select,textarea{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:var(--ink);font:400 13px/1.4 'DM Sans',sans-serif;width:100%;transition:.12s border-color;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--em);}
+textarea{min-height:100px;resize:vertical;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:top;}
+th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;background:var(--surface2);}
+tr:last-child td{border-bottom:0;}
+
+/* ── ACCORDION ── */
+details{border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:7px;}
+summary{cursor:pointer;padding:10px 13px;background:var(--surface2);font-weight:600;font-size:12px;display:flex;justify-content:space-between;align-items:center;list-style:none;user-select:none;}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'›';transform:rotate(90deg);display:inline-block;color:var(--muted);transition:.15s;}
+details[open] summary::after{transform:rotate(270deg);}
+.inside{padding:12px;border-top:1px solid var(--border);}
+
+/* ── CHECKLIST ── */
+.checklist{display:grid;gap:5px;}
+.check{display:flex;gap:9px;align-items:flex-start;padding:8px 11px;border-radius:9px;background:var(--surface2);border:1px solid var(--border);transition:.12s;}
+.check:has(input:checked){background:rgba(11,168,122,.06);border-color:rgba(11,168,122,.25);}
+.check input{width:15px;height:15px;margin-top:2px;flex-shrink:0;accent-color:var(--em);}
+.check span{font-size:12px;line-height:1.5;}
+.check .danger{color:var(--red);font-weight:600;}
+
+/* ── CALLOUTS ── */
+.notice{border-left:3px solid var(--amber);background:var(--amber-dim);padding:9px 12px;border-radius:0 9px 9px 0;font-size:12px;color:var(--amber);line-height:1.5;}
+.success{border-left:3px solid var(--em);background:var(--em-dim);padding:9px 12px;border-radius:0 9px 9px 0;font-size:12px;color:var(--em2);line-height:1.5;}
+.danger-box{border-left:3px solid var(--red);background:var(--red-dim);padding:9px 12px;border-radius:0 9px 9px 0;font-size:12px;color:var(--red);line-height:1.5;}
+.info-box{border-left:3px solid var(--blue);background:var(--blue-dim);padding:9px 12px;border-radius:0 9px 9px 0;font-size:12px;color:var(--blue);line-height:1.5;}
+
+/* ── TIMER ── */
+.timer-block{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.timer-time{font-family:'JetBrains Mono',monospace;font-size:48px;font-weight:600;color:var(--em);letter-spacing:-.04em;line-height:1;transition:.3s color;}
+.timer-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:600;margin-bottom:3px;}
+.tw .timer-time{color:var(--amber);}
+.td .timer-time{color:var(--red);animation:pulse .9s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ── PROGRESS ── */
+.progress-bar{height:5px;border-radius:999px;background:rgba(0,0,0,.08);overflow:hidden;}
+.progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--em),var(--blue));transition:.4s width;}
+
+/* ── COACHING SESSION SPECIFIC ── */
+.patient-card{background:linear-gradient(135deg,#f0faf6 0%,#f7fbff 100%);border:1.5px solid var(--em-mid);border-radius:16px;padding:18px;margin-bottom:14px;}
+.patient-name{font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--ink);}
+.patient-meta{font-size:12px;color:var(--muted);margin-top:2px;margin-bottom:12px;}
+.vitals-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:12px;}
+@media(max-width:700px){.vitals-grid{grid-template-columns:repeat(4,1fr);}}
+.vital-box{background:#fff;border:1px solid var(--border);border-radius:10px;padding:7px 8px;text-align:center;}
+.vital-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700;}
+.vital-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;margin-top:3px;}
+.vital-val.v-warn{color:var(--amber);}
+.vital-val.v-crit{color:var(--red);}
+.vital-val.v-ok{color:var(--em);}
+.patient-details{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;}
+@media(max-width:600px){.patient-details{grid-template-columns:1fr;}}
+.pd-row{padding:6px 8px;background:#fff;border-radius:8px;border:1px solid var(--border);}
+.pd-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+.pd-val{margin-top:2px;color:var(--ink);line-height:1.4;}
+.allergy-flag{color:var(--red);font-weight:700;}
+
+/* ── COACHING STEPS ── */
+.coaching-phase{margin-bottom:20px;}
+.phase-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.phase-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
+.phase-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;}
+.phase-desc{font-size:11px;color:var(--muted);margin-top:1px;}
+.step-list{display:grid;gap:5px;}
+.step-item{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;font-size:12px;line-height:1.5;}
+.step-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.expected-answer{background:#fffdf5;border:1px solid rgba(212,134,10,.25);border-left:3px solid var(--amber);border-radius:0 9px 9px 0;padding:10px 13px;font-size:12px;line-height:1.6;display:none;margin-top:5px;}
+.expected-answer.show{display:block;}
+.reveal-btn{font-size:11px;color:var(--amber);background:var(--amber-dim);border:1px solid rgba(212,134,10,.2);border-radius:7px;padding:4px 10px;cursor:pointer;margin-top:5px;font-weight:600;}
+
+/* ── SCORE CELLS ── */
+.score-cell{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;}
+.sc-num{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--em);}
+.sc-label{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* ── DEBRIEF ── */
+.debrief-section{padding:14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);}
+.debrief-header{font-family:'Fraunces',serif;font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);margin-bottom:5px;gap:10px;flex-wrap:wrap;}
+.mark-text{font-size:12px;flex:1;}
+.mark-status{display:flex;gap:5px;}
+.mark-btn{border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;transition:.12s;}
+.mark-btn.done{background:var(--em-dim);border-color:var(--em);color:var(--em);}
+.mark-btn.missed{background:var(--red-dim);border-color:var(--red);color:var(--red);}
+
+/* ── NEWS2 ── */
+.n2-row{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:center;padding:8px;border-radius:8px;background:var(--surface);border:1px solid var(--border);margin-bottom:5px;}
+.n2-param{font-size:12px;font-weight:600;}
+.n2-btns{display:flex;gap:5px;flex-wrap:wrap;}
+.n2-btn{padding:5px 9px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;transition:.12s;}
+.n2-btn.s0{background:var(--em-dim);border-color:var(--em);color:var(--em);}
+.n2-btn.s1{background:var(--amber-dim);border-color:var(--amber);color:var(--amber);}
+.n2-btn.s2{background:rgba(255,120,0,.1);border-color:rgba(255,120,0,.4);color:#c05a00;}
+.n2-btn.s3{background:var(--red-dim);border-color:var(--red);color:var(--red);}
+.n2-total{font-family:'Fraunces',serif;font-size:52px;font-weight:900;text-align:center;line-height:1;}
+.n2-level{font-size:13px;font-weight:600;text-align:center;padding:8px;border-radius:9px;margin-top:8px;}
+
+/* ── FLASHCARD ── */
+.flash-face{min-height:140px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;border:2px dashed var(--border2);border-radius:var(--r);cursor:pointer;transition:.15s;font-family:'Fraunces',serif;font-size:17px;font-weight:700;line-height:1.4;color:var(--ink);}
+.flash-face:hover{border-color:var(--em);background:var(--em-dim);}
+.flash-answer{background:#fffdf5;border:1px solid var(--border);border-left:3px solid var(--em);border-radius:0 var(--r2) var(--r2) 0;padding:13px;font-size:12px;line-height:1.6;display:none;margin-top:10px;}
+.flash-answer.show{display:block;}
+
+/* ── DAY ROW ── */
+.day-row{display:grid;grid-template-columns:80px 1fr auto;gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--border);border-radius:11px;background:var(--surface);margin-bottom:5px;transition:.12s;}
+.day-row.done{border-color:rgba(11,168,122,.3);background:rgba(11,168,122,.04);}
+.day-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--em);font-weight:600;}
+.day-title{font-size:12px;font-weight:600;margin-bottom:2px;}
+.day-tasks{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ── SKILL CARD ── */
+.skill-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;}
+.skill-card.is-safe{border-color:rgba(11,168,122,.35);background:rgba(11,168,122,.04);}
+
+/* ── UTILITY ── */
+.muted{color:var(--muted);}
+.small{font-size:12px;}
+.tiny{font-size:10px;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.divider{height:1px;background:var(--border);margin:14px 0;}
+ul.clean{list-style:none;display:grid;gap:5px;}
+ul.clean li{font-size:12px;padding:5px 9px;background:var(--surface2);border-radius:7px;color:var(--muted);}
+ul.clean li::before{content:'→ ';color:var(--em);font-weight:700;}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">🩺 <span>OSCE Hub</span><span class="logo-sub">Muskan · RN1 Adult · NMC PRN 1031148296</span></div>
+  <div class="sec-switcher">
+    <button class="sec-btn active-practice" onclick="switchSection('practice')">🎯 Practice</button>
+    <button class="sec-btn" onclick="switchSection('study')">📖 Study</button>
+    <button class="sec-btn" onclick="switchSection('track')">📈 Track</button>
+  </div>
+</div>
+
+<!-- PRACTICE SECTION -->
+<div class="section-view active" id="sec-practice">
+  <div class="section-header">
+    <div class="inner">
+      <div>
+        <div class="sec-label practice">Practice Zone</div>
+        <div class="sec-title">Timed Sessions & Mock Exams</div>
+        <div class="sec-desc">Run full coaching sessions with patient handover, timed stations, debrief, and expected answers.</div>
+      </div>
+      <div id="practice-hstats" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+    </div>
+  </div>
+  <div class="subnav"><div class="subnav-inner" id="practice-subnav">
+    <button class="active p" data-tab="coaching" onclick="switchTab('coaching','practice')">🎭 Coaching Session</button>
+    <button data-tab="fullmock" onclick="switchTab('fullmock','practice')">🧪 Full Mock Exam</button>
+  </div></div>
+
+  <!-- COACHING SESSION -->
+  <section class="tab active" id="coaching">
+  <main>
+    <!-- STEP 1: PICK SCENARIO + STATION -->
+    <div id="coach-setup" style="max-width:780px;margin:0 auto;">
+      <div class="sh"><div><h2>Choose a Session</h2><p>Select a patient scenario, then the station type. A full coaching session will begin.</p></div>
+      <button class="btn btn-ghost" onclick="randomScenario()">🎲 Random</button></div>
+
+      <!-- Scenario picker as cards -->
+      <div style="margin-bottom:16px;">
+        <div class="field" style="margin-bottom:8px;"><label>Patient Scenario</label></div>
+        <div id="scenarioCards" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+      </div>
+
+      <!-- Station type as big buttons -->
+      <div style="margin-bottom:20px;">
+        <div class="field" style="margin-bottom:8px;"><label>Station Type</label></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;" id="stationTypeCards"></div>
+      </div>
+
+      <button class="btn btn-em" style="width:100%;padding:14px;font-size:14px;" onclick="startCoachingSession()">▶ Start Coaching Session</button>
+    </div>
+
+    <!-- STEP 2: COACHING SESSION (hidden until started) -->
+    <div id="coach-session" style="display:none;">
+
+      <!-- Phase bar -->
+      <div style="display:flex;gap:0;margin-bottom:20px;border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+        <div class="phase-tab" id="ptab-brief" onclick="goPhase('brief')" style="flex:1;padding:10px 6px;text-align:center;cursor:pointer;background:var(--em);color:#fff;font-size:11px;font-weight:700;border-right:1px solid rgba(255,255,255,.3);">① Briefing</div>
+        <div class="phase-tab" id="ptab-station" onclick="goPhase('station')" style="flex:1;padding:10px 6px;text-align:center;cursor:pointer;background:var(--surface2);color:var(--muted);font-size:11px;font-weight:600;border-right:1px solid var(--border);">② Station</div>
+        <div class="phase-tab" id="ptab-debrief" onclick="goPhase('debrief')" style="flex:1;padding:10px 6px;text-align:center;cursor:pointer;background:var(--surface2);color:var(--muted);font-size:11px;font-weight:600;">③ Debrief</div>
+      </div>
+
+      <!-- PHASE: BRIEFING -->
+      <div id="phase-brief">
+        <div class="g2">
+          <div>
+            <div id="patient-card-render"></div>
+            <div class="card" style="margin-top:12px;">
+              <h3>🎯 Your Task</h3>
+              <div id="task-render" style="font-size:13px;line-height:1.6;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="card" style="margin-bottom:12px;">
+              <h3>⚠️ Before you start — safety reminders</h3>
+              <ul class="clean">
+                <li>Hand hygiene BEFORE touching patient or equipment</li>
+                <li>Confirm full name AND date of birth — not just name</li>
+                <li>Explain what you are going to do and gain consent</li>
+                <li>Check allergies before any medication or product</li>
+                <li>Maintain privacy and dignity throughout</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>📋 Station focus areas</h3>
+              <div id="focus-render"></div>
+            </div>
+            <div class="actions" style="margin-top:14px;">
+              <button class="btn btn-em" style="flex:1;padding:12px;font-size:13px;" onclick="goPhase('station');timerStart()">▶ Start — timer begins</button>
+              <button class="btn btn-ghost" onclick="resetCoaching()">← Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE: STATION -->
+      <div id="phase-station" style="display:none;">
+        <div class="g2" style="margin-bottom:14px;">
+          <div>
+            <div class="timer-block" id="timerBlock">
+              <div><div class="timer-label" id="timerLabel">Loading...</div><div class="timer-time" id="timerDisplay">00:00</div></div>
+              <div class="actions" style="margin-top:0;">
+                <button class="btn btn-em" onclick="timerStart()">▶</button>
+                <button class="btn btn-ghost" onclick="timerPause()">⏸</button>
+                <button class="btn btn-ghost" onclick="timerReset()">↺</button>
+              </div>
+              <div style="flex:1;min-width:120px;"><div class="progress-bar" style="margin-top:4px;"><div class="progress-fill" id="timerBar" style="width:100%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:4px;" id="timerPct">100% remaining</div></div>
+            </div>
+            <div id="patient-card-mini" style="margin-top:12px;"></div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Station steps — <span id="stationType-label" style="color:var(--em);"></span></h3>
+              <div id="steps-render" style="display:grid;gap:5px;margin-top:8px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-em" onclick="goPhase('debrief');timerPause()">✓ Finish — go to debrief</button>
+          <button class="btn btn-ghost" onclick="goPhase('brief')">← Briefing</button>
+        </div>
+      </div>
+
+      <!-- PHASE: DEBRIEF -->
+      <div id="phase-debrief" style="display:none;">
+        <div class="g2">
+          <div>
+            <div class="debrief-section" style="margin-bottom:12px;">
+              <div class="debrief-header"><span style="font-size:18px;">✅</span> Safety checklist</div>
+              <div id="debrief-safety"></div>
+            </div>
+            <div class="debrief-section">
+              <div class="debrief-header"><span style="font-size:18px;">🚨</span> Serious safety errors</div>
+              <div id="debrief-serious"></div>
+            </div>
+          </div>
+          <div>
+            <div class="card" style="margin-bottom:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <h3>Session result</h3>
+                <div id="session-result-pill"></div>
+              </div>
+              <div class="g4">
+                <div class="score-cell"><div class="sc-num" id="db-safe">0</div><div class="sc-label">Safety ✓</div></div>
+                <div class="score-cell"><div class="sc-num" id="db-total">12</div><div class="sc-label">Total</div></div>
+                <div class="score-cell"><div class="sc-num" id="db-serious" style="color:var(--red);">0</div><div class="sc-label">Serious ✗</div></div>
+                <div class="score-cell"><div class="sc-num" id="db-pct">—</div><div class="sc-label">Score %</div></div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>📝 Expected answers — <span style="color:var(--em);">click to reveal</span></h3>
+              <p class="small muted" style="margin-bottom:10px;">For each focus area, what was the expected clinical reasoning or action?</p>
+              <div id="debrief-expected"></div>
+            </div>
+            <div class="actions" style="margin-top:12px;">
+              <button class="btn btn-em" onclick="saveSession()">💾 Save session</button>
+              <button class="btn btn-ghost" onclick="logFromDebrief()">⚠ Log mistake</button>
+              <button class="btn btn-ghost" onclick="resetCoaching()">↺ New session</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  </section>
+
+  <!-- FULL MOCK -->
+  <section class="tab" id="fullmock">
+  <main>
+    <!-- VIEW: setup -->
+    <div id="mock-setup">
+      <div class="sh"><div><h2>Full Mock Exam</h2><p>10 stations in sequence. Each station runs with a timer. Results tracked automatically.</p></div>
+      <button class="btn btn-em" onclick="buildMock()">🎲 Generate mock</button></div>
+      <div id="mock-plan-view" style="display:none;">
+        <div class="card" style="margin-bottom:14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+            <div>
+              <h3 id="mock-scenario-title" style="margin:0;"></h3>
+              <p class="small muted" style="margin-top:3px;">Complete all 10 stations in order. Do not skip.</p>
+            </div>
+            <button class="btn btn-em" onclick="startMockRun()" style="padding:10px 20px;font-size:13px;">▶ Begin Mock Exam</button>
+          </div>
+          <div id="mock-station-list" style="display:grid;gap:6px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: running a mock station -->
+    <div id="mock-runner" style="display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <div>
+          <div class="tiny muted" style="letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;">Station <span id="mock-station-num"></span> of 10</div>
+          <h2 style="font-family:'Fraunces',serif;font-size:20px;font-weight:900;" id="mock-station-title"></h2>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost" onclick="mockAbandon()">✕ Abandon mock</button>
+        </div>
+      </div>
+
+      <!-- Progress bar across all 10 stations -->
+      <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-bottom:16px;" id="mock-progress-dots"></div>
+
+      <!-- Station content -->
+      <div class="g2">
+        <div>
+          <div id="mock-patient-card" style="margin-bottom:12px;"></div>
+          <div class="card" style="margin-bottom:12px;">
+            <h3 id="mock-task-title" style="margin-bottom:6px;"></h3>
+            <p class="small muted" id="mock-task-desc"></p>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:8px;">Station steps</h3>
+            <div id="mock-steps" style="display:grid;gap:5px;"></div>
+          </div>
+        </div>
+        <div>
+          <div class="timer-block" id="mock-timer-block" style="margin-bottom:12px;">
+            <div>
+              <div class="timer-label" id="mock-timer-label">—</div>
+              <div class="timer-time" id="mock-timer-display">00:00</div>
+            </div>
+            <div class="actions" style="margin-top:0;">
+              <button class="btn btn-em" onclick="mockTimerStart()">▶</button>
+              <button class="btn btn-ghost" onclick="mockTimerPause()">⏸</button>
+              <button class="btn btn-ghost" onclick="mockTimerReset()">↺</button>
+            </div>
+            <div style="flex:1;min-width:100px;">
+              <div class="progress-bar"><div class="progress-fill" id="mock-timer-bar" style="width:100%"></div></div>
+              <div class="tiny muted" style="margin-top:4px;" id="mock-timer-pct">100% remaining</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:10px;">Mark this station</h3>
+            <div class="field" style="margin-bottom:10px;">
+              <label>Result</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button class="btn btn-ghost" id="mock-mark-pass" onclick="mockMark('pass')" style="justify-content:center;">✓ Pass</button>
+                <button class="btn btn-ghost" id="mock-mark-borderline" onclick="mockMark('borderline')" style="justify-content:center;">~ Borderline</button>
+                <button class="btn btn-ghost" id="mock-mark-fail" onclick="mockMark('fail')" style="justify-content:center;">✗ Fail</button>
+                <button class="btn btn-ghost" id="mock-mark-notdone" onclick="mockMark('notdone')" style="justify-content:center;">— Not done</button>
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:12px;">
+              <label>Serious safety error?</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button class="btn btn-ghost" id="mock-err-none" onclick="mockError('none')" style="justify-content:center;">✓ None</button>
+                <button class="btn btn-ghost" id="mock-err-yes" onclick="mockError('yes')" style="justify-content:center;">✗ Error occurred</button>
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label>Quick note (optional)</label>
+              <input id="mock-station-note" placeholder="e.g. missed hand hygiene, forgot consent..." style="font-size:12px;"/>
+            </div>
+            <button class="btn btn-em" style="width:100%;margin-top:12px;padding:11px;font-size:13px;" onclick="mockNextStation()" id="mock-next-btn">Next station →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: results -->
+    <div id="mock-results" style="display:none;">
+      <div class="sh"><div><h2>Mock Exam Complete</h2><p id="mock-results-subtitle"></p></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-em" onclick="buildMock()">🎲 New mock</button>
+        <button class="btn btn-ghost" onclick="switchTab('mistakes','track');switchSection('track')">Log mistakes</button>
+      </div></div>
+      <div id="mock-verdict" style="margin-bottom:16px;padding:18px;border-radius:16px;border:2px solid;"></div>
+      <div class="card" style="margin-bottom:14px;">
+        <h3 style="margin-bottom:12px;">Station by station</h3>
+        <div id="mock-results-table"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:10px;">What to do next</h3>
+        <div id="mock-next-steps" style="display:grid;gap:6px;"></div>
+      </div>
+    </div>
+  </main>
+  </section>
+</div>
+
+<!-- STUDY SECTION -->
+<div class="section-view" id="sec-study">
+  <div class="section-header">
+    <div class="inner">
+      <div>
+        <div class="sec-label study">Study Zone</div>
+        <div class="sec-title">Reference, Flashcards & Clinical Tools</div>
+        <div class="sec-desc">Learn the theory. Practice calculations. Use the interactive NEWS2 and skills checklists.</div>
+      </div>
+    </div>
+  </div>
+  <div class="subnav"><div class="subnav-inner" id="study-subnav">
+    <button class="active s" data-tab="flash" onclick="switchTab('flash','study')">⚡ Flashcards</button>
+    <button data-tab="skills" onclick="switchTab('skills','study')">🧰 Skills Lab</button>
+    <button data-tab="news2" onclick="switchTab('news2','study')">📊 NEWS2</button>
+    <button data-tab="drugcalc" onclick="switchTab('drugcalc','study')">💊 Drug Calc</button>
+    <button data-tab="pvebp" onclick="switchTab('pvebp','study')">✍️ PV & EBP</button>
+    <button data-tab="reading" onclick="switchTab('reading','study')">📚 NMC Reading</button>
+  </div></div>
+
+  <!-- FLASHCARDS -->
+  <section class="tab active" id="flash">
+  <main>
+    <div class="sh"><div><h2>Safety Flashcards</h2><p>25 cards. Click to flip. Use daily — 10 minutes minimum.</p></div>
+    <div style="display:flex;gap:8px;align-items:center;"><span id="flashProgress" class="pill pill-muted"></span><button class="btn btn-em" onclick="nextFlash()">Next →</button><button class="btn btn-ghost" onclick="shuffleFlash()">🔀</button></div></div>
+    <div class="g2">
+      <div class="card">
+        <div class="flash-face" id="flashCard" onclick="flipFlash()">Click "Next" to begin.</div>
+        <div class="flash-answer" id="flashAnswer"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;"><span id="flashCounter" class="tiny muted"></span></div>
+        <div class="progress-bar" style="margin-top:6px;"><div class="progress-fill" id="flashBar" style="width:0%"></div></div>
+      </div>
+      <div class="card">
+        <h3>Core scripts — memorise these</h3>
+        <details open><summary>Universal safety opening</summary><div class="inside small" style="line-height:1.8;font-style:italic;color:var(--em2);">"Hello, my name is ____. I'm one of the nurses caring for you today. Can I confirm your full name and date of birth? I'm here to [task]. Is that okay? Do you have any allergies? I'll maintain your privacy and dignity throughout."</div></details>
+        <details><summary>SBAR opening</summary><div class="inside small" style="line-height:1.8;font-style:italic;color:var(--blue);">"This is ____, nurse on ____. Calling about [patient name], DOB ____. I am concerned because [reason]."</div></details>
+        <details><summary>PV opening sentence</summary><div class="inside small" style="line-height:1.8;font-style:italic;color:var(--amber);">"My first priority is patient safety. I would act in accordance with the NMC Code, escalate to the appropriate senior, document factually, maintain confidentiality, and reflect to learn."</div></details>
+        <details><summary>EBP safe closing</summary><div class="inside small" style="line-height:1.8;font-style:italic;color:var(--purple);">"I would not change practice based on a single study. I would consider quality of evidence, local policy, NICE guidance, patient preference, and clinical judgement."</div></details>
+        <details><summary>Medication 5 Rights + 2</summary><div class="inside small" style="line-height:1.8;"><b style="color:var(--em);">Right patient · Right drug · Right dose · Right route · Right time</b><br>+ Right documentation · Right to refuse</div></details>
+        <details><summary>ABCDE order</summary><div class="inside small" style="line-height:1.9;"><b style="color:var(--em);">A</b> Airway — look/listen/feel<br><b style="color:var(--blue);">B</b> Breathing — RR, SpO₂, work of breathing<br><b style="color:var(--amber);">C</b> Circulation — HR, BP, CRT, skin colour<br><b style="color:var(--red);">D</b> Disability — ACVPU/GCS, BM, pupils<br><b style="color:var(--purple);">E</b> Exposure — temp, skin, wounds, pain</div></details>
+      </div>
+    </div>
+  </main>
+  </section>
+
+  <!-- SKILLS LAB -->
+  <section class="tab" id="skills">
+  <main>
+    <!-- LIST VIEW -->
+    <div id="skills-list-view">
+      <div class="sh">
+        <div><h2>Skills Lab</h2><p>Open any skill for a full coached walkthrough — what to do, what to say, instant-fail triggers, and common mistakes.</p></div>
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;">
+          <input id="skillSearch" placeholder="Search skills..." oninput="renderSkillsList()" style="width:160px;"/>
+          <button class="btn btn-red" onclick="skillsFilter='High';renderSkillsList()">High risk</button>
+          <button class="btn btn-amber" onclick="skillsFilter='Medium';renderSkillsList()">Medium</button>
+          <button class="btn btn-ghost" onclick="skillsFilter='all';renderSkillsList()">All</button>
+        </div>
+      </div>
+      <div id="skillsGrouped"></div>
+    </div>
+
+    <!-- DETAIL VIEW -->
+    <div id="skills-detail-view" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="closeSkillDetail()">← All skills</button>
+        <div>
+          <div id="sd-title" style="font-family:'Fraunces',serif;font-size:22px;font-weight:900;"></div>
+          <div id="sd-meta" style="font-size:12px;color:var(--muted);margin-top:2px;"></div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-em" id="sd-mark-safe-btn" onclick="toggleSkillSafe()"></button>
+          <button class="btn btn-amber" onclick="logSkillMistake()">⚠ Log mistake</button>
+        </div>
+      </div>
+      <div class="g2">
+        <div>
+          <div class="card" style="margin-bottom:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+              <h3 style="margin:0;">Step-by-step coached walkthrough</h3>
+              <div style="display:flex;gap:7px;">
+                <button class="btn btn-em" style="font-size:11px;" onclick="startSkillTimer()">⏱ Start timer</button>
+                <button class="btn btn-ghost" style="font-size:11px;" onclick="resetSkillTimer()">↺</button>
+              </div>
+            </div>
+            <div class="timer-block" id="sd-timer-block" style="margin-bottom:12px;">
+              <div><div class="timer-label" id="sd-timer-label">Not started</div><div class="timer-time" id="sd-timer-display">00:00</div></div>
+              <div class="progress-bar" style="flex:1;min-width:80px;"><div class="progress-fill" id="sd-timer-bar" style="width:100%"></div></div>
+            </div>
+            <div id="sd-steps-coached" style="display:grid;gap:7px;"></div>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:10px;">Log an attempt</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+              <button class="btn btn-em" onclick="logAttempt('clean')" style="justify-content:center;padding:10px;">✓ Clean — no errors</button>
+              <button class="btn btn-red" onclick="logAttempt('errors')" style="justify-content:center;padding:10px;">✗ Had errors</button>
+            </div>
+            <div id="sd-attempts-log" style="font-size:12px;color:var(--muted);line-height:1.6;"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:12px;border-left:3px solid var(--red);">
+            <h3 style="margin-bottom:8px;color:var(--red);">🚨 Instant fail triggers</h3>
+            <div id="sd-instant-fail" style="display:grid;gap:5px;"></div>
+          </div>
+          <div class="card" style="margin-bottom:12px;border-left:3px solid var(--em);">
+            <h3 style="margin-bottom:8px;">💬 Key phrases to say aloud</h3>
+            <div id="sd-phrases" style="display:grid;gap:5px;"></div>
+          </div>
+          <div class="card" style="margin-bottom:12px;border-left:3px solid var(--amber);">
+            <h3 style="margin-bottom:8px;">⚠ Most common mistakes</h3>
+            <div id="sd-mistakes" style="display:grid;gap:5px;"></div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--blue);">
+            <h3 style="margin-bottom:8px;">👁 Examiner watches for</h3>
+            <div id="sd-examiner" style="display:grid;gap:5px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  </section>
+
+  <!-- NEWS2 -->
+  <section class="tab" id="news2">
+  <main>
+    <div class="sh"><div><h2>NEWS2 Calculator</h2><p>Score each parameter. Know escalation thresholds cold.</p></div></div>
+    <div class="g2">
+      <div class="card"><h3>Score parameters</h3><div id="news2Rows"></div><button class="btn btn-ghost" style="margin-top:8px;" onclick="resetNEWS2()">↺ Reset</button></div>
+      <div>
+        <div class="card" style="text-align:center;margin-bottom:12px;">
+          <div class="tiny muted" style="letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">Total NEWS2 Score</div>
+          <div class="n2-total" id="news2Total">—</div>
+          <div class="n2-level" id="news2Level" style="background:rgba(0,0,0,.04);color:var(--muted);">Score parameters above</div>
+        </div>
+        <div class="card" style="margin-bottom:12px;">
+          <h3>Escalation thresholds</h3>
+          <div class="checklist" style="pointer-events:none;">
+            <div class="check"><span><b style="color:var(--em);">1–4 Low:</b> Reassess every 4–6 hours.</span></div>
+            <div class="check"><span><b style="color:var(--amber);">5–6 Medium or any single 3:</b> Urgent review within 1 hour.</span></div>
+            <div class="check"><span><b style="color:var(--red);">≥7 High:</b> Emergency — escalate immediately.</span></div>
+            <div class="check"><span><b style="color:var(--purple);">New confusion (C/V/P/U):</b> Always 3 — urgent regardless of total.</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>SBAR script</h3>
+          <details open><summary>Full SBAR template</summary><div class="inside small" style="line-height:1.9;">
+            <b style="color:var(--em);">S</b> "This is [name], nurse on [ward]. Calling about [patient], DOB [date]. NEWS2 is [X]."<br>
+            <b style="color:var(--blue);">B</b> "Admitted with [reason]. PMH: [relevant]. Medications: [relevant]. Allergies: [list]."<br>
+            <b style="color:var(--amber);">A</b> "RR [X], SpO₂ [X]%, BP [X/X], HR [X], Temp [X]°C, ACVPU [X]. Concerned about [specific]."<br>
+            <b style="color:var(--red);">R</b> "I need you to review urgently. I recommend [action]."
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </main>
+  </section>
+
+  <!-- DRUG CALC -->
+  <section class="tab" id="drugcalc">
+  <main>
+    <div class="sh"><div><h2>Drug Calculation Practice</h2><p>Practice until automatic. No calculator needed in the OSCE.</p></div>
+    <button class="btn btn-em" onclick="newDrugQuestion()">🎲 New question</button></div>
+    <div class="g2">
+      <div>
+        <div class="card" style="margin-bottom:12px;">
+          <h3>Key formulas</h3>
+          <div style="display:grid;gap:7px;margin-top:8px;">
+            <div class="success"><b>Tablets:</b> Prescribed ÷ Stock dose</div>
+            <div class="success"><b>Liquid:</b> (Prescribed ÷ Stock) × Volume of stock</div>
+            <div class="success"><b>IV rate:</b> Volume (mL) ÷ Time (hours) = mL/hr</div>
+            <div class="success"><b>Drops/min:</b> (Volume × Drop factor) ÷ Time (mins)</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Unit conversions</h3>
+          <ul class="clean">
+            <li>1 g = 1000 mg</li><li>1 mg = 1000 micrograms</li><li>1 L = 1000 mL</li>
+            <li>Always convert to SAME unit first</li>
+            <li>Insulin: units are units — never convert</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px;">
+          <div class="pill pill-blue" style="margin-bottom:10px;">Practice question</div>
+          <div id="dcQuestion" style="font-size:14px;font-weight:600;line-height:1.6;margin-bottom:12px;">Click "New question" to begin.</div>
+          <div class="field"><label>Your answer</label>
+            <div style="display:flex;gap:8px;align-items:center;"><input id="dcAnswer" placeholder="Number only..." type="number" step="any" style="width:140px;flex-shrink:0;" onkeydown="if(event.key==='Enter')checkDrugAnswer()"><span id="dcUnit" class="muted small"></span></div>
+          </div>
+          <div class="actions"><button class="btn btn-em" onclick="checkDrugAnswer()">Check</button><button class="btn btn-ghost" onclick="newDrugQuestion()">Skip</button></div>
+          <div id="dcResult" style="margin-top:10px;"></div>
+        </div>
+        <div class="card">
+          <h3>Score</h3>
+          <div class="g4" style="margin-top:8px;">
+            <div class="score-cell"><div class="sc-num" id="dcCorrect">0</div><div class="sc-label">Correct</div></div>
+            <div class="score-cell"><div class="sc-num" id="dcWrong" style="color:var(--red);">0</div><div class="sc-label">Wrong</div></div>
+            <div class="score-cell"><div class="sc-num" id="dcPct">—</div><div class="sc-label">Accuracy</div></div>
+            <div class="score-cell"><div class="sc-num" id="dcStreak">0</div><div class="sc-label">Streak</div></div>
+          </div>
+          <button class="btn btn-ghost" style="margin-top:10px;width:100%;font-size:11px;" onclick="state.dc={c:0,w:0,streak:0};save();renderDCScore()">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  </section>
+
+  <!-- PV & EBP -->
+  <section class="tab" id="pvebp">
+  <main>
+    <div class="sh"><div><h2>Professional Values & EBP</h2><p>Two written stations. 10 minutes each. Framework must be automatic.</p></div>
+    <button class="btn btn-em" onclick="randomWritten()">🎲 Random prompt</button></div>
+    <div class="g2">
+      <div class="card">
+        <div style="display:flex;gap:5px;margin-bottom:12px;">
+          <button class="btn btn-em" id="pvTab" onclick="writtenMode='PV';renderWritten()">PV</button>
+          <button class="btn btn-ghost" id="ebpTab" onclick="writtenMode='EBP';renderWritten()">EBP</button>
+        </div>
+        <div class="field"><label>Select prompt</label><select id="writtenPrompt" onchange="renderWrittenPrompt()"></select></div>
+        <div id="writtenBrief" style="margin-top:10px;"></div>
+        <div class="card" style="margin-top:10px;background:var(--surface2);">
+          <div class="tiny muted" style="margin-bottom:5px;letter-spacing:1px;text-transform:uppercase;">Framework</div>
+          <div id="writtenFramework" style="font-size:12px;line-height:1.9;"></div>
+          <button class="btn btn-ghost" style="margin-top:8px;font-size:11px;" onclick="copyFramework()">Copy</button>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <h3>Timed answer</h3>
+          <button class="btn btn-em" style="font-size:11px;" onclick="setTimer(10,'Written station');switchSection('practice')">Set 10-min timer</button>
+        </div>
+        <div class="field"><textarea id="writtenAnswer" placeholder="Write under timed conditions. Aim 200–300 words."></textarea></div>
+        <div class="actions"><button class="btn btn-em" onclick="saveWrittenAttempt()">Save</button></div>
+        <div class="divider"></div>
+        <h3>Self-mark</h3>
+        <div id="writtenChecklist" class="checklist" style="margin-top:8px;"></div>
+      </div>
+    </div>
+  </main>
+  </section>
+
+  <!-- NMC READING -->
+  <section class="tab" id="reading">
+  <main>
+    <div class="sh"><div><h2>NMC Reading Map</h2><p>Read in order. Tick each section when complete.</p></div>
+    <button class="btn btn-ghost" onclick="Object.keys(state.reading).forEach(k=>delete state.reading[k]);save();renderReading()">Untick all</button></div>
+    <div id="readingMap" class="g2"></div>
+  </main>
+  </section>
+</div>
+
+<!-- TRACK SECTION -->
+<div class="section-view" id="sec-track">
+  <div class="section-header">
+    <div class="inner">
+      <div>
+        <div class="sec-label track">Track Zone</div>
+        <div class="sec-title">Progress, Plan & Mistakes</div>
+        <div class="sec-desc">Monitor your prep, tick off your daily plan, and keep the mistake log tight.</div>
+      </div>
+      <div id="track-hstats" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+    </div>
+  </div>
+  <div class="subnav"><div class="subnav-inner" id="track-subnav">
+    <button class="active t" data-tab="dashboard" onclick="switchTab('dashboard','track')">🏠 Dashboard</button>
+    <button data-tab="plan" onclick="switchTab('plan','track')">📅 6-Week Plan</button>
+    <button data-tab="mistakes" onclick="switchTab('mistakes','track')">🧾 Mistake Log</button>
+  </div></div>
+
+  <!-- DASHBOARD -->
+  <section class="tab active" id="dashboard">
+  <main>
+    <div class="sh"><div><h2>Dashboard</h2><p>Your prep at a glance.</p></div>
+    <button class="btn btn-red" style="font-size:11px;" onclick="if(confirm('Reset ALL progress?')){localStorage.removeItem(STORE);location.reload()}">↺ Reset all</button></div>
+    <div class="g2" style="margin-bottom:14px;">
+      <div class="card"><h3>Pass readiness</h3><div class="checklist" id="readiness-checks"></div></div>
+      <div class="card">
+        <h3>🚨 Instant fail — serious safety errors</h3>
+        <div class="danger-box" style="margin-bottom:10px;">Any ONE = automatic fail. Practice until these never happen.</div>
+        <ul class="clean">
+          <li>Touch patient/equipment before hand hygiene</li>
+          <li>No patient identity check (name + DOB)</li>
+          <li>No consent or explanation given</li>
+          <li>Missed allergy check in medication/wound station</li>
+          <li>Medication error: wrong patient/dose/route/time/expiry</li>
+          <li>ANTT contamination of key site or sterile field</li>
+          <li>Unsafe sharps handling</li>
+          <li>Failure to escalate deterioration or abnormal NEWS2</li>
+          <li>Breach of confidentiality or unprofessional conduct</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h3>⚡ Tonight's session (45 min)</h3>
+      <div style="display:grid;gap:7px;margin-top:10px;">
+        <div class="day-row"><div><div class="day-label">20 min</div><div class="tiny muted">Station</div></div><div><div class="day-title">Pneumonia → Assessment</div><div class="day-tasks">Partner plays patient. Timer on. Safety opening → A–E → escalate using SBAR.</div></div><button class="btn btn-em" onclick="quickStart('Pneumonia','Assessment')">Start</button></div>
+        <div class="day-row"><div><div class="day-label">15 min</div><div class="tiny muted">Skills</div></div><div><div class="day-title">Blood glucose monitoring</div><div class="day-tasks">Skills Lab → BGM. Full checklist timed.</div></div><button class="btn btn-ghost" onclick="switchSection('study');switchTab('skills','study')">Open</button></div>
+        <div class="day-row"><div><div class="day-label">10 min</div><div class="tiny muted">Log</div></div><div><div class="day-title">Review and log mistakes</div><div class="day-tasks">Write every missed step. Set repeat date.</div></div><button class="btn btn-ghost" onclick="switchTab('mistakes','track')">Log</button></div>
+      </div>
+    </div>
+  </main>
+  </section>
+
+  <!-- 6-WEEK PLAN -->
+  <section class="tab" id="plan">
+  <main>
+    <div class="sh"><div><h2>6-Week Prep Plan</h2><p>42 days. Tick each when complete.</p></div>
+    <div style="display:flex;gap:8px;"><button class="btn btn-ghost" onclick="expandAllWeeks(true)">Expand all</button><button class="btn btn-ghost" onclick="expandAllWeeks(false)">Collapse all</button></div></div>
+    <div id="weekPlan"></div>
+  </main>
+  </section>
+
+  <!-- MISTAKE LOG -->
+  <section class="tab" id="mistakes">
+  <main>
+    <div class="sh"><div><h2>Mistake Log</h2><p>Log every error. Repeat that station until it's fixed.</p></div>
+    <div style="display:flex;gap:8px;"><button class="btn btn-ghost" onclick="exportMistakes()">Export CSV</button><button class="btn btn-red" onclick="clearMistakes()">Clear all</button></div></div>
+    <div class="g2">
+      <div class="card">
+        <h3>Add mistake</h3>
+        <div class="field"><label>Station / skill</label><input id="mStation" placeholder="e.g. Pneumonia Assessment"/></div>
+        <div class="row2"><div class="field"><label>Severity</label><select id="mSeverity"><option>Minor</option><option>Moderate</option><option>Serious safety risk</option></select></div><div class="field"><label>Status</label><select id="mStatus"><option>Open</option><option>Repeated once</option><option>Fixed</option></select></div></div>
+        <div class="field"><label>What happened</label><textarea id="mMistake" placeholder="Exactly what went wrong..."></textarea></div>
+        <div class="field"><label>Correct action</label><textarea id="mFix" placeholder="Exact correct step next time..."></textarea></div>
+        <div class="field"><label>Repeat date</label><input id="mDate" type="date"/></div>
+        <button class="btn btn-em" onclick="addMistake()">Add to log</button>
+      </div>
+      <div class="card"><h3>Log <span id="mistakeCount" class="pill pill-red" style="margin-left:5px;"></span></h3><div id="mistakeTable"></div></div>
+    </div>
+  </main>
+  </section>
+</div>
+
+<script>
+const STORE='rn1_osce_v4';
+let state=JSON.parse(localStorage.getItem(STORE)||'{}');
+state.done=state.done||{};state.attempts=state.attempts||[];state.mistakes=state.mistakes||[];
+state.reading=state.reading||{};state.skillDone=state.skillDone||{};state.readiness=state.readiness||{};
+state.writtenAttempts=state.writtenAttempts||[];state.dc=state.dc||{c:0,w:0,streak:0};state.skillChecks=state.skillChecks||{};state.skillAttempts=state.skillAttempts||{};
+function save(){localStorage.setItem(STORE,JSON.stringify(state));renderStats();}
+
+// ── SECTION & TAB ROUTING ─────────────────────────────────
+let currentSection='practice';
+function switchSection(sec){
+  currentSection=sec;
+  document.querySelectorAll('.section-view').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+sec).classList.add('active');
+  document.querySelectorAll('.sec-btn').forEach(b=>b.className='sec-btn');
+  document.querySelector(`.sec-btn[onclick*="${sec}"]`).className='sec-btn active-'+sec;
+  if(sec==='study')renderSkillsList();
+  if(sec==='track')renderStats();
+}
+function switchTab(tab,sec){
+  const parent=document.getElementById('sec-'+sec);
+  parent.querySelectorAll('section.tab').forEach(s=>s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  const nav=document.getElementById(sec+'-subnav');
+  nav.querySelectorAll('button').forEach(b=>{b.classList.remove('active','p','s','t');});
+  const active=nav.querySelector(`[data-tab="${tab}"]`);
+  if(active){active.classList.add('active');active.classList.add(sec==='practice'?'p':sec==='study'?'s':'t');}
+  if(tab==='skills')renderSkillsList();
+  if(tab==='reading')renderReading();
+  if(tab==='mistakes')renderMistakes();
+  if(tab==='news2')renderNEWS2();
+}
+function quickStart(name,type){switchSection('practice');switchTab('coaching','practice');setTimeout(()=>{currentScenario=scenarios.find(s=>s.name===name);currentStationType=type;startCoachingSession();},50);}
+
+
+// ── ALL DATA ──────────────────────────────────────────────
+
+const scenarios=[
+{name:'Pneumonia',tags:['A-E','NEWS2','sepsis','oxygen'],
+patient:'Margaret Davies, 68F, Ward 7 Bay 2, Admitted: 09:30',
+brief:'3-day productive cough, fever 38.9°C, pleuritic right-sided chest pain, SpO₂ 93% on air. Lives alone. Retired teacher.',
+vitals:{rr:'24',spo2:'93% (air)',bp:'104/68',hr:'108',temp:'38.9°C',acvpu:'Alert',news2:'7'},
+pmh:'COPD (mild), Hypertension, Type 2 Diabetes',
+meds:'Salbutamol MDI PRN, Ramipril 5mg OD, Metformin 500mg BD',
+allergies:'Penicillin (rash)',
+focus:['Full A–E — pay attention to B (RR 24, SpO₂ 93%, accessory muscles)','NEWS2 = 7 → HIGH risk → escalate immediately','Oxygen therapy: target SpO₂ 88–92% (COPD background)','Sepsis screen: temperature + tachycardia + low BP','Pain score — pleuritic pain limits breathing effort','Allergy flag: no amoxicillin — check antibiotic options','Document and escalate using SBAR to senior nurse/doctor']},
+{name:'Suspected DVT',tags:['Wells','PE risk','pain'],
+patient:'James Okafor, 52M, Ward 4 Bay 1, Admitted: 14:00',
+brief:'48-hour left calf pain, redness and swelling following 12-hour flight from Lagos. No chest symptoms currently. Overweight.',
+vitals:{rr:'16',spo2:'97% (air)',bp:'138/86',hr:'94',temp:'37.2°C',acvpu:'Alert',news2:'1'},
+pmh:'Hypertension, BMI 31',
+meds:'Amlodipine 5mg OD',
+allergies:'NKDA',
+focus:['Pain, redness, warmth, swelling — Wells criteria scoring','PE red flags to assess: SOB, chest pain, haemoptysis','Calf circumference comparison','Mobility, recent surgery, OCP/HRT use in history','Escalate for urgent Doppler USS','Explain process and likely anticoagulation treatment','NEWS2 = 1 but clinical picture warrants urgent action']},
+{name:'Chronic Heart Failure',tags:['fluid','breathlessness','oedema'],
+patient:'Dorothy Patel, 74F, Ward 6 Bay 3, Admitted: 11:15',
+brief:'5-day increasing breathlessness, bilateral ankle swelling, 3 kg weight gain in 1 week. Cannot lie flat. Orthopnoeic.',
+vitals:{rr:'22',spo2:'91% (air)',bp:'158/94',hr:'96',temp:'36.8°C',acvpu:'Alert',news2:'5'},
+pmh:'CHF (EF 35%), AF, CKD stage 3, Hypertension',
+meds:'Furosemide 40mg OD, Bisoprolol 2.5mg OD, Ramipril 5mg OD, Warfarin 3mg OD',
+allergies:'Aspirin (angioedema)',
+focus:['A–E — B: SpO₂ 91%, RR 22 → NEWS2 medium risk → urgent review','Fluid balance: urine output, daily weight, input/output chart','Bilateral pitting oedema — grade and document','Orthopnoea/PND history — how many pillows?','Has she taken her furosemide today? Adherence check','Escalate — SpO₂ 91% needs oxygen and medical review','Do NOT give aspirin — allergy']},
+{name:'Subdural Haematoma',tags:['neuro','GCS','falls'],
+patient:'Arthur Brennan, 82M, A&E Resus Bay, Arrived: 08:45',
+brief:'Found on floor by carer after unwitnessed fall. Confused and agitated. Right-sided headache. On warfarin for AF.',
+vitals:{rr:'14',spo2:'96% (air)',bp:'162/88',hr:'58',temp:'36.6°C',acvpu:'Confused (C)',news2:'4'},
+pmh:'AF, Hypertension, Osteoarthritis, Previous TIA 2021',
+meds:'Warfarin (INR target 2-3), Ramipril 10mg OD, Paracetamol 1g QDS PRN',
+allergies:'Ibuprofen (GI bleed)',
+focus:['ACVPU = C (Confused) → NEWS2 score of 3 from this alone → ESCALATE IMMEDIATELY','GCS — eyes, verbal, motor response. Document baseline','Pupils — equal and reactive? Unequal = neurosurgical emergency','Limb strength — pronator drift, grip','Headache: onset, character, severity — "worst of life"?','Anticoagulant history — warfarin + head injury = urgent CT + haematology input','Do NOT delay — escalate to doctor/senior NOW, this is a potential bleed']},
+{name:"Alzheimer's",tags:['dementia','capacity','safeguarding'],
+patient:"Elsie Turner, 81F, Ward 9 Bay 4, Admitted: yesterday",
+brief:"Admitted from care home. 3-day confusion, wandering, not eating or drinking. Staff report she has been 'not herself'. Family concerned.",
+vitals:{rr:'16',spo2:'96% (air)',bp:'122/74',hr:'88',temp:'37.4°C',acvpu:'Confused (C)',news2:'3'},
+pmh:"Alzheimer's dementia (moderate), HTN, Hypothyroidism",
+meds:'Donepezil 10mg OD, Amlodipine 5mg OD, Levothyroxine 75mcg OD',
+allergies:'Codeine (confusion/drowsiness)',
+focus:['Communication approach: sit at eye level, calm, simple sentences, no jargon','Capacity assessment: can she understand, retain, weigh up, communicate a decision?','Nutrition and hydration assessment — MUST score, fluid balance','Falls and wandering risk — bed rails? Cot sides? Safe environment?','Safeguarding: any concerns about care home quality of care?','Family involvement — consent, best interests discussion','Avoid codeine — documented allergy. Document all actions clearly']},
+{name:'End of Life',tags:['dignity','pain','family'],
+patient:'Robert Chen, 67M, Palliative Care Suite 2, Admitted: 3 days ago',
+brief:'Terminal non-small cell lung cancer, estimated days to weeks. Breakthrough pain not controlled. Family are at bedside and are distressed. Increasingly drowsy.',
+vitals:{rr:'10',spo2:'94% (2L O₂)',bp:'98/60',hr:'72',temp:'36.4°C',acvpu:'Voice (V)',news2:'5'},
+pmh:'NSCLC stage IV, COPD, Depression',
+meds:'MST Continus 30mg BD, Oramorph 5mg PRN (breakthrough), Haloperidol 500mcg SC PRN, Midazolam 2.5mg SC PRN',
+allergies:'NKDA',
+focus:['Comfort, dignity and privacy are the priority throughout','Pain and symptom assessment: location, score, when last breakthrough dose given','Mouth care — dry lips, oral hygiene, frequency 2-hourly','Positioning for comfort — prevent pressure damage','Family communication: empathetic, honest, clear. Do not give false hope','Cultural/spiritual needs — ask sensitively','Escalate uncontrolled pain to palliative care team promptly']},
+{name:'Ectopic Pregnancy',tags:['haemorrhage','shock','urgent'],
+patient:'Priya Nair, 28F, A&E Bay 6, Arrived: 16:20',
+brief:'Severe right iliac fossa pain onset 2 hours ago, 5/10 vaginal bleeding. LMP 7 weeks ago. Positive home pregnancy test 3 weeks ago. Pale, sweaty.',
+vitals:{rr:'22',spo2:'96% (air)',bp:'88/54',hr:'124',temp:'36.9°C',acvpu:'Alert',news2:'7'},
+pmh:'Nil significant. Previous chlamydia treatment 2019.',
+meds:'Folic acid 400mcg OD',
+allergies:'Latex (urticaria)',
+focus:['NEWS2 = 7 → EMERGENCY → call for help NOW before completing assessment','A–E — C: HR 124, BP 88/54 = haemodynamic instability = shock','This is a surgical emergency — escalate to gynaecology team immediately','IV access, bloods, cross-match, fluid resuscitation as directed','Pain assessment — do not delay analgesia','Emotional support and privacy — she may be frightened and in shock','Latex allergy — ensure no latex gloves or equipment used']},
+{name:'Hernia',tags:['pain','obstruction','surgery'],
+patient:'Colin Smith, 58M, Surgical Assessment Unit, Admitted: 10:30',
+brief:'Painful, irreducible right groin lump appeared this morning. Nausea, vomiting ×2, no bowel movement for 24 hours. Lump is hard and very tender.',
+vitals:{rr:'18',spo2:'97% (air)',bp:'142/88',hr:'102',temp:'37.6°C',acvpu:'Alert',news2:'2'},
+pmh:'Hypertension, Type 2 Diabetes, Previous MI 2019',
+meds:'Aspirin 75mg OD, Atorvastatin 40mg OD, Metformin 1g BD, Ramipril 5mg OD',
+allergies:'Morphine (nausea/vomiting)',
+focus:['Pain assessment PQRST — onset sudden this morning, severity 8/10','Bowel symptoms: last motion, bowel sounds (obstruction?), nausea/vomiting','Strangulation signs: rigid, non-reducible, severe pain, discolouration','Fasting status — may need emergency surgery today','Pre-operative considerations: cardiac history, diabetes, anticoagulants','Morphine allergy — escalate for alternative analgesia (fentanyl, ketamine)','Escalate to surgical team urgently — strangulation is a surgical emergency']},
+{name:'Community Assessment',tags:['holistic','ADLs','MDT'],
+patient:'Iris Mackenzie, 78F, Home Visit (District Nursing Referral)',
+brief:'GP referral for nursing assessment. Lives alone since husband died 6 months ago. Daughter concerned: not eating, not leaving house, missed GP appointments, house becoming unsafe.',
+vitals:{rr:'16',spo2:'96% (air)',bp:'136/82',hr:'74',temp:'36.7°C',acvpu:'Alert',news2:'0'},
+pmh:'Osteoporosis, Mild Depression, Hypothyroidism, Previous wrist fracture 2021',
+meds:'Levothyroxine 100mcg OD, Sertraline 50mg OD, Alendronic Acid 70mg weekly, Calcium+D3 BD',
+allergies:'Penicillin (rash)',
+focus:['ADLs: washing, dressing, cooking, shopping, mobilising around home','Medication adherence: are tablets in blister pack? Any missed?','Home safety: trips hazards, kitchen safety, lighting, bathroom rails','Nutrition and hydration: MUST score, fridge contents, recent meals','Mood assessment: PHQ-2/9 questions, grief, social isolation','Falls risk: previous history, footwear, vision, balance','MDT referrals needed: OT (home adaptations), social worker (care package), GP (medication review)']},
+{name:'Homelessness',tags:['safeguarding','complex needs','social'],
+patient:'Danny Walsh, 34M, A&E Bay 3, Brought in by ambulance',
+brief:'Found collapsed in street. Infected left leg wound — cellulitis with tracking. No fixed address for 2 years. ETOH on breath. Agitated. States he is "fine" and wants to leave.',
+vitals:{rr:'20',spo2:'95% (air)',bp:'118/72',hr:'112',temp:'38.2°C',acvpu:'Alert (agitated)',news2:'4'},
+pmh:'Hepatitis C, Alcohol dependency, Previous IVDU (states "clean 6 months"), Depression',
+meds:'Unknown — states he takes "nothing"',
+allergies:'Unknown',
+focus:['De-escalation first — calm, non-judgemental, respectful approach. Do not match his agitation','Wound assessment: size, tracking, warmth, lymphangitis, sepsis risk (temp 38.2, HR 112)','Safeguarding: capacity to leave? Best interests if lacks capacity?','CAGE/AUDIT alcohol screening — sensitively done','Unknown medications and allergies — treat cautiously, check hospital records','Safe discharge: where will he go? MUST have a safe plan — social worker, hostel referral','MDT involvement: social worker, drug/alcohol team, mental health liaison']}
+];
+
+// Add expected answers to each scenario
+const expectedAnswers = {"Pneumonia": ["A: Airway clear — no obstruction. B: RR 24 (scores 2 on NEWS2), SpO₂ 93% on air — this is below 94%, oxygen therapy is indicated. Note COPD background means target 88–92% not 94–98%. C: BP 104/68, HR 108 — possible sepsis. D: Alert but monitor. E: Temperature 38.9°C — fever with productive cough, possible CAP.", "NEWS2 calculation: RR 24 = +2, SpO₂ 93% = +2, BP 104/68 = +2, HR 108 = +1, Temp 38.9 = +1, ACVPU Alert = 0. Total = 7–8. HIGH risk. Escalate IMMEDIATELY using SBAR.", "Start controlled oxygen: target SpO₂ 88–92% (COPD background). Use Venturi mask or nasal cannula at low flow. Check prescription before starting. Document device, flow rate, SpO₂ before and after.", "Sepsis screen: temperature >38.5°C + tachycardia + hypotension = 2 SIRS criteria. Ask: recent UTI, chest infection, skin/wound infections. Time to antibiotics matters. PENICILLIN ALLERGY — flag prominently. Do NOT prescribe amoxicillin or co-amoxiclav.", "PQRST: Provocation — inspiration. Quality — sharp, pleuritic. Region — right-sided. Severity — 6/10. Timing — 3 days, worse on movement and deep breath. Pain limits her respiratory effort — this worsens hypoxia.", "SBAR: 'This is [name], nurse on Ward 7. Calling about Margaret Davies, DOB [date]. NEWS2 is 7–8 — HIGH risk. She has RR 24, SpO₂ 93%, BP 104/68, HR 108, Temp 38.9. I am concerned about possible CAP with sepsis. She has a penicillin allergy. I need you to review urgently and consider antibiotics, blood cultures, and fluid resuscitation.'"], "Suspected DVT": ["Wells criteria: calf tenderness (+1), calf swelling >3cm (+1), recent immobility/long haul flight (+1), no alternative diagnosis more likely (+2). Likely Wells ≥3 = high probability DVT. Needs urgent Doppler USS.", "PE red flags to actively ask about: sudden onset SOB, pleuritic chest pain, haemoptysis, tachycardia, low SpO₂. If ANY present, this becomes a suspected PE — higher urgency escalation needed.", "Measure both calves at same point (10cm below tibial tuberosity). Document difference. >3cm difference = significant. Document date, time, measurement.", "Risk factors history: recent surgery (within 12 weeks), oral contraceptive pill, HRT, previous DVT/PE, malignancy, smoking, BMI. Flight of 12+ hours is a recognised risk factor.", "SBAR: 'Calling about James Okafor, DOB [date]. I suspect a DVT — Wells score likely ≥3 following a 12-hour flight. Calf is tender, swollen and warm. No chest symptoms currently. I need you to review and arrange urgent Doppler USS. He may need anticoagulation.'"], "Chronic Heart Failure": ["NEWS2 = 5 (medium risk). SpO₂ 91% = +2, RR 22 = +2, HR 96 = +1. Single SpO₂ of 91% scores 2 — this requires urgent medical review within 1 hour. Start oxygen therapy aiming SpO₂ 94–98%. Note: Aspirin allergy — do NOT give aspirin.", "Fluid assessment: ask about daily weight — has she been weighing herself? 3kg gain in 1 week indicates significant fluid retention. Input/output chart: how much urine has she passed today? Has she taken her furosemide?", "Oedema assessment: press firmly over sacrum and ankles for 15 seconds. Grade: trace, 1+, 2+, 3+, 4+. Note bilateral. Document site, depth, warmth. Orthopaedic measurement if available.", "Medication adherence: has she taken furosemide today? At what time? Has she been taking it regularly? Diuretic non-compliance is the most common cause of decompensated CHF admission.", "SBAR: 'Calling about Dorothy Patel. NEWS2 is 5 — medium risk. SpO₂ is 91%, RR 22, and she has bilateral oedema with 3kg weight gain. She has known CHF and I am concerned she is decompensating. She has an aspirin allergy. I need you to review urgently.'"], "Subdural Haematoma": ["ACVPU = C (Confused) scores 3 on NEWS2 — this ALONE triggers urgent review regardless of the total score. Overall NEWS2 = 4+3 = high-medium range. But the confusion is the clinical emergency here. ESCALATE BEFORE completing the full assessment if he deteriorates.", "GCS scoring: Eyes (1-4) + Verbal (1-5) + Motor (1-6). Document as E[x]V[x]M[x] = total. Eyes: does he open them spontaneously? Verbal: is speech confused or incomprehensible? Motor: follows commands? Document accurately and report change.", "Pupils: use pen torch. Are they equal? Do they react to light? Unequal pupils (anisocoria) = possible transtentorial herniation = neurosurgical emergency — call immediately. Also assess limb strength bilaterally.", "Anticoagulant history is CRITICAL: warfarin + head injury = high risk of expanding haematoma. What is his INR? Has he had his recent INR checked? If warfarin is supratherapeutic, intracranial bleed risk is significantly elevated. Urgent CT head + haematology input.", "SBAR: 'Calling about Arthur Brennan — urgent. He fell and has a new confusion (ACVPU = C, NEWS2 score of 3 from confusion alone). He is on warfarin. He has a right-sided headache. GCS is [score]. Pupils [finding]. I am very concerned about a possible intracranial bleed. I need you to review immediately.'"], "Alzheimer's": ["Communication approach: get to her eye level before speaking. Use her preferred name — check the care home notes. Short sentences, one instruction at a time. Allow extra time to respond. Do not rush or complete her sentences. Use non-verbal cues — gentle touch if appropriate and consented.", "Capacity assessment under MCA 2005: she must be able to understand, retain, weigh up and communicate a decision. A diagnosis of dementia does NOT mean she lacks capacity — assess for each specific decision. If she lacks capacity, a best interests decision must be made with MDT and family.", "MUST score: if BMI unknown, use arm circumference as proxy. Ask carer how long she has not been eating — >5 days with nil/minimal intake adds 2 points. Score ≥2 = high risk. Refer to dietitian. Consider fortified foods, supplements.", "Safeguarding alert: unexplained deterioration, not eating, not engaging — could indicate neglect or a change in the care home's ability to meet her needs. Ask sensitively about her recent care. Document any concerns and escalate to nurse in charge.", "Codeine allergy causes confusion and drowsiness — relevant because she is confused. Any codeine-containing analgesia must be avoided. Ensure this allergy is prominently on her wristband and in drug chart."], "End of Life": ["Pain and symptom assessment: current pain score 0–10. When was last breakthrough Oramorph dose given and what effect did it have? Is 5mg proving insufficient? Are there other symptoms — nausea, dyspnoea, anxiety, agitation? Palliative care team may need to review syringe driver prescription.", "Mouth care: at this stage patients are often unable to take fluids orally. 2-hourly oral care minimum — foam sticks to moisten lips and mouth, apply lip balm to cracked lips. Document that oral care was performed. This is comfort care, not nutrition.", "Positioning: ensure he is comfortable — not supine flat if breathless. Head of bed elevated. Regular repositioning minimum 2-hourly to prevent pressure damage. Check bony prominences (sacrum, heels, shoulders) at each repositioning.", "Family communication: acknowledge their distress. 'I can see this is incredibly difficult for your family and we want to support you as well as Robert.' Be honest but gentle. Explain what is being done for comfort. Do not give false hope but do not take away all hope. Ask if there are any cultural or religious practices important to them at this time.", "Escalation: breakthrough pain not controlled with PRN Oramorph = contact palliative care team or doctor immediately. Do not leave him in uncontrolled pain. Document the pain score, time, what was given, effect. This is a clinical priority."], "Ectopic Pregnancy": ["NEWS2 = 7 (HIGH). HR 124, BP 88/54, RR 22. This is haemodynamic instability — hypovolaemic shock secondary to possible ruptured ectopic pregnancy. CALL FOR HELP FIRST before completing your assessment. This is a surgical emergency.", "A–E focus on C: HR 124 = tachycardia, BP 88/54 = hypotension, skin likely pale and clammy. CRT may be prolonged. Shock = inadequate organ perfusion. She needs: IV access (large bore), bloods (FBC, U&E, clotting, group and save), IV fluids as directed by doctor, nil by mouth.", "As a nurse you cannot diagnose ectopic pregnancy but you can recognise the clinical emergency. Your role: escalate immediately to senior doctor/gynaecology, gain IV access, assist with investigations, provide pain relief as directed, offer emotional support.", "Latex allergy: ensure no latex gloves used. Use nitrile or vinyl gloves. Ensure latex-free equipment (IV cannula, catheter if needed). Document and verbally alert the team.", "Emotional support: she may be terrified. Explain briefly and calmly what is happening — 'We need to get some doctors to see you urgently as we're concerned about you. We're going to take good care of you.' Do not leave her alone. Ask if she wants someone with her."], "Hernia": ["Pain assessment PQRST: Provocation — the lump appeared this morning, made worse by palpation. Quality — constant, severe, crampy. Region — right groin, radiating to scrotum. Severity — 8/10. Timing — sudden onset, not resolving. A strangulated hernia causes severe constant pain — this pattern is concerning.", "Bowel obstruction signs: no bowel movement 24 hours + nausea + vomiting = possible mechanical obstruction from strangulated hernia. Assess bowel sounds — absent = obstruction. Check for abdominal distension. This is a surgical emergency.", "Strangulation: non-reducible, very tender, discoloured lump = strangulated hernia (blood supply cut off). This is a time-critical surgical emergency — bowel ischaemia and perforation can occur within hours. Escalate IMMEDIATELY.", "Morphine allergy — flag prominently. He is in severe pain (8/10) and cannot have morphine. Escalate to doctor to prescribe alternative analgesia: fentanyl, oxycodone, ketamine. Do not leave him in severe pain. Document the allergy clearly on drug chart.", "Pre-operative preparation if going to theatre: ensure fasting status documented, consent obtained by surgical team, allergies on wristband, recent observations, diabetes management discussed (metformin may be withheld), cardiac history (MI 2019) flagged to anaesthetist."], "Community Assessment": ["ADL assessment using Barthel Index or equivalent: washing, dressing, feeding, transferring (bed to chair), mobility (distance, walking aids), stairs, toileting, continence, bathing. Document each item. Identify where she is struggling most — this drives the care plan.", "Medication adherence: look at the blister packs — are doses missing? Are medications stored safely? Does she understand what each medication is for? At her age with thyroid and depression medications, non-adherence can have significant consequences. Request GP medication review.", "Home safety walk-through: loose rugs, poor lighting, lack of grab rails, kettle safety, stair condition, bathroom setup. Falls are the leading cause of injury in older adults. Risk factors: osteoporosis, previous wrist fracture, hypothyroidism causing weakness.", "MUST score: ask what she has eaten in the last 3 days. Assess appearance — has she lost weight? Look in the fridge. Calculate MUST: BMI + weight loss + illness factor. Score ≥2 = refer dietitian. Fortified foods, meal delivery service (Meals on Wheels).", "MDT referrals: Occupational Therapist (home adaptations — grab rails, raised toilet seat, stairlift assessment); Social Worker (care package — domestic help, personal care); Physiotherapist (mobility, falls prevention programme); GP (medication review, mental health follow-up for depression and grief)."], "Homelessness": ["De-escalation first: approach calmly, introduce yourself, maintain a relaxed posture, speak slowly and clearly. Do not stand over him or invade his space. Do not match his agitation. 'Hi Danny, I'm [name], one of the nurses here. You're safe. I'd like to help you — is that okay?' Give him some control in the situation.", "Wound assessment: cellulitis with tracking lymphangitis — the red tracking line moving up the limb indicates lymphatic spread of infection. This can progress to sepsis rapidly. Measure and mark the edge of erythema with a pen and time — if it spreads, escalate immediately. Temperature 38.2 + HR 112 = early sepsis.", "Capacity assessment: does he understand the risk of leaving? Can he weigh up the consequences? Is his decision-making impaired by alcohol at this moment? If he lacks capacity due to intoxication, a best interests decision can be made. If he has capacity, his right to leave must be respected — but document risk, advice given, and that he was offered care.", "Unknown medications and allergies: treat with extreme caution. Check national systems (Summary Care Record if available). Avoid high-risk medications without clear history. Flag unknown allergy status prominently. When in doubt — do not administer non-urgent medications.", "Safe discharge planning: calling him a taxi and sending him away is not safe discharge. Social worker referral for housing support — local authority has a duty to house those at risk. Drug/alcohol team referral. Mental health liaison. Prescribe antibiotics to take home if he is not willing to stay. Harm reduction approach — meet him where he is."]};
+
+const stationTemplates={
+Assessment:{mins:20,steps:['Read scenario fully','Hand hygiene before contact','Introduce: name, role, purpose','Confirm full name and date of birth','Explain assessment and gain consent','Privacy and dignity — curtains, cover patient','ABCDE assessment framework','Focused history: complaint, PMH, medications, allergies','Pain score (0–10 or FACES)','Review charts/observations if available','Identify abnormal findings','Escalate using SBAR if concerned','Document clearly and accurately'],output:'Safe structured assessment. At least 2 abnormal findings identified. Escalation documented.'},
+Planning:{mins:14,steps:['Read assessment notes fully','Identify two priority nursing problems','Write SMART goals (Specific/Measurable/Achievable/Relevant/Time-bound)','Minimum 3 nursing interventions per problem','Evidence-based rationale for each intervention','Include patient involvement/self-care','Set review/evaluation time','Write legibly — no unsafe abbreviations'],output:'Two SMART nursing problems with goals, interventions, rationales and review time.'},
+Implementation:{mins:15,steps:['Read task carefully','Hand hygiene','ID check and re-introduction','Explain task — gain consent','Allergy check if medication/product involved','Check prescription/chart/equipment if relevant','ANTT if sterile procedure','Carry out intervention safely','Communicate throughout','Observe patient response','Safe waste/sharps disposal','Document: care given, response, time'],output:'Safe competent implementation with communication, documentation and escalation of concerns.'},
+Evaluation:{mins:8,steps:['Identify patient and reason for evaluation','Compare current with previous baseline','State whether goals were met/partly met/not met','Give specific evidence: NEWS2, pain score, fluid balance etc','State next nursing actions','Escalate concerns using SBAR','Update care plan','Document with time and date'],output:'Concise evaluation with goal outcome, evidence and next-step plan.'}
+};
+const masterSafety=['Performed hand hygiene before patient contact','Introduced self (name and role)','Confirmed patient full name AND date of birth','Explained task clearly before proceeding','Gained consent','Maintained privacy and dignity throughout','Checked allergies where clinically relevant','Communicated clearly throughout','Identified abnormal findings','Escalated appropriately using SBAR','Documented accurately and legibly','Completed within station time limit'];
+const skills=[
+{name:'Wound assessment + ANTT dressing',mins:21,risk:'High',tags:['ANTT','infection prevention'],must:['Prepare and decontaminate clean surface before unpacking','Hand hygiene and PPE before opening sterile field','ID, explain, consent, privacy','Maintain ANTT — never contaminate the key site (wound surface)','Never touch the sterile field with non-sterile items','Assess wound: size, edges, bed colour, exudate colour/amount/odour, surrounding skin, pain','SEWING signs of infection: Swelling, Erythema, Warmth, Increasing exudate, New odour, General deterioration','Document and escalate infection/bleeding signs']},
+{name:'IM injection',mins:12,risk:'High',tags:['medication','sharps'],must:['5 rights + 2 check against prescription','Confirm patient ID and allergy status','Check medication name, dose, route, time, expiry','Gain consent, explain procedure','Select correct site (deltoid/vastus lateralis)','Aspirate NOT required for IM (UK practice 2024)','Uncap needle immediately before use','Dispose of sharps into sharps bin immediately — never resheath','Document and observe patient after']},
+{name:'SC injection',mins:12,risk:'High',tags:['medication','sharps','insulin'],must:['5 rights + 2 check','Patient ID and allergy check','Pinch skin fold — do not aspirate for SC','Correct angle (45° or 90° per needle/patient)','Immediate sharps disposal','Document and observe for reaction']},
+{name:'IV cannula flush + VIP score',mins:12,risk:'High',tags:['IV','ANTT','VIP'],must:['Inspect cannula site before touching','Score VIP 0–5: Score 2+ = remove and re-site','Hand hygiene and PPE','ANTT for flush preparation and administration','Flush with prescribed solution at correct rate','Stop immediately if pain, swelling, resistance or extravasation','Document VIP score, flush given, patient response']},
+{name:'Inhaled medication',mins:12,risk:'High',tags:['inhaler','respiratory'],must:['Check prescription, patient ID, allergies','Check device type (MDI/spacer/DPI), expiry, prime if required','Assess breathing before administration','Correct technique: exhale fully, seal lips, slow inhalation, hold 10 sec','Wait 30–60 sec between doses','Document, assess response, escalate poor response/deterioration']},
+{name:'Suppository administration',mins:10,risk:'High',tags:['rectal','medication','dignity'],must:['Check prescription and allergies','Sensitive explanation — ensure privacy before proceeding','Lateral Sims position','Check contraindications (rectal pathology, recent surgery)','Gloves and lubricant throughout','Administer beyond internal sphincter (3–4 cm)','Document and monitor for effect']},
+{name:'Blood glucose monitoring',mins:8,risk:'Medium',tags:['BGM','diabetes','POCT'],must:['Confirm patient identity and consent','Hand hygiene and PPE (gloves)','Check strip expiry and QC/calibration if required','Warm finger — use side of fingertip','Immediate sharps disposal','Read and document result','Hypoglycaemia <4 mmol/L → treat immediately; Hyperglycaemia >11 mmol/L → escalate']},
+{name:'Oxygen therapy',mins:10,risk:'Medium',tags:['oxygen','SpO₂','prescription'],must:['Check oxygen prescription — target saturation range stated','Check current SpO₂ and clinical status','Select correct device: NC (1–4L), simple mask (5–10L), NRB (10–15L), Venturi (controlled)','Explain and gain consent','Fit correctly — check comfort and skin protection','Document device, flow rate, SpO₂ before and after','Monitor and escalate if not improving']},
+{name:'Fluid balance chart',mins:14,risk:'Medium',tags:['fluid balance','calculation','chart'],must:['Read ALL inputs: IV, oral, NGT, drugs in solution','Read ALL outputs: urine, drain, vomit, stoma, insensible loss','Calculate 24-hour totals accurately','Identify positive/negative balance and interpret clinically','Escalate oliguria (<0.5 mL/kg/hr or <400 mL/day)','Document calculated balance']},
+{name:'MSU + urinalysis',mins:12,risk:'Medium',tags:['urine','dipstick','MSU'],must:['Explain midstream clean-catch technique','Gloves and eye protection for handling','Dipstick timing exactly per package instructions','Read: nitrite + leucocytes = likely UTI','Document findings and send for MC&S if indicated','Escalate abnormal results']},
+{name:'Catheter specimen of urine (CSU)',mins:8,risk:'Medium',tags:['catheter','urine','ANTT'],must:['Confirm indication and consent','Clamp drainage tube 10–15 min before sampling if required','Decontaminate sampling port — 70% alcohol 15 sec + dry','Sterile syringe via port — ANTT throughout','Never disconnect catheter from drainage bag','Label and send with correct request form']},
+{name:'Nutritional assessment (MUST)',mins:8,risk:'Medium',tags:['MUST','nutrition','BMI'],must:['Calculate MUST: BMI + weight loss + acute disease','BMI <18.5 = 2; 18.5–20 = 1; >20 = 0','Weight loss >10% = 2; 5–10% = 1; <5% = 0','Acute disease with nil/minimal intake >5 days = 2','Score ≥2 = high risk — refer dietitian urgently','Escalate any swallowing/dysphagia concerns immediately']},
+{name:'NG tube safety check',mins:12,risk:'High',tags:['NG tube','feeding','pH check'],must:['NEVER feed without checking tube position first','pH check using CE-marked strips only — NOT blue litmus','pH ≤5.5 = gastric → safe to feed','pH 5.5–6 = borderline → do NOT feed → escalate','No aspirate obtained = do not feed → escalate for X-ray','NEVER use air auscultation method — not safe UK practice','Document pH reading, action taken']},
+{name:'Pain assessment',mins:6,risk:'Medium',tags:['pain','PQRST','NRS'],must:['NRS 0–10 or FACES if communication difficulty','PQRST: Provocation, Quality, Region/Radiation, Severity, Timing','Effect on function, sleep, mobility','Current analgesia and side effects','Allergy check for potential analgesics','Escalate uncontrolled pain (≥7/10)','Document score and characteristics']},
+{name:'Peak expiratory flow rate',mins:8,risk:'Medium',tags:['PEFR','asthma'],must:['Explain technique — demonstrate if possible','Upright position seated or standing','Disposable mouthpiece','Full inhalation → blast out as fast as possible','Best of three attempts','Compare to personal best or predicted value','Escalate: <50% = severe; <33% = life-threatening']},
+{name:'Pre-operative check',mins:12,risk:'Medium',tags:['surgery','WHO checklist'],must:['Confirm identity — minimum 2 identifiers','Confirm procedure and site — ask patient to state it','Check consent form — signed, correct procedure and site','Allergy status — wristband, chart, verbal confirmation','Fasting status — time of last food and drink','Recent observations and NEWS2','Anticoagulants and regular medications as per policy','Escalate: missing consent, abnormal obs, patient concerns']},
+{name:'Pressure area assessment (Braden)',mins:8,risk:'Medium',tags:['Braden','skin','repositioning'],must:['Inspect all bony prominences: sacrum, heels, trochanters, occiput, elbows','Braden scale: Sensory, Moisture, Activity, Mobility, Nutrition, Friction/Shear','Score ≤18 = at risk; ≤12 = high risk','Note any existing damage: grade 1–4','Plan repositioning minimum 2-hourly','Specialised mattress if appropriate','Escalate grade 2+ or deteriorating skin']},
+{name:'Anti-embolism stockings (TED)',mins:10,risk:'Medium',tags:['DVT prevention','measurement'],must:['Check prescription and contraindications: PVD, skin breakdown, oedema','Measure: ankle circumference, calf circumference, leg length','Select correct size per manufacturer chart','Apply to dry skin — no creases or wrinkles','Check knee opening position over kneecap','Educate: remove daily for skin check, report pain/colour changes','Escalate: cold, pale, numb, painful distal limb']},
+{name:'Urinary catheter removal',mins:8,risk:'Medium',tags:['catheter','removal','voiding trial'],must:['Confirm indication for removal','Explain procedure — consent and privacy','Hand hygiene and PPE','Deflate balloon FULLY — check mL expected vs retrieved','Smooth removal — patient inhales on withdrawal','Advise: void within 6 hours; urgency is normal','Document: time of removal, balloon volume, patient advice','Escalate: no void in 6 hours = urinary retention']},
+{name:'Bowel assessment',mins:8,risk:'Low',tags:['Bristol stool chart','bowel','constipation'],must:['Usual pattern — what is normal for this patient','Date and type of last bowel movement — Bristol stool chart 1–7','Symptoms: pain, bloating, rectal bleeding, mucus','Contributing factors: diet, fluids, mobility, medications (opioids)','Escalate red flags: blood, altered habit >4 weeks, obstruction signs','Document and refer if constipation management needed']},
+{name:'Oral care assessment',mins:8,risk:'Low',tags:['oral hygiene','mouth care'],must:['Assess lips, mucosa, gums, tongue, teeth, dentures','Note dryness, ulceration, coating, odour, candida, pain','Flag swallowing/SALT concern if present','2-hourly oral care for NIL-by-mouth/ventilated/end-of-life','Toothbrush preferred; foam sticks for fragile mucosa','Apply lip balm for dry/cracked lips','Document findings and care given']}
+];
+const weekData=[
+{w:'Week 1',theme:'Foundation & diagnostics',days:[
+['Day 1','Read OSCE Candidate Information Booklet. Understand APIE structure and serious errors list. Write out safety opening script 5 times.','30 min'],
+['Day 2','NMC Code 4 themes. Write PV opening sentence. Practise ID check and consent out loud 10 times.','30 min'],
+['Day 3','Assessment station: Pneumonia. 20 min timed. Partner as patient. Log every missed step.','45 min'],
+['Day 4','Planning station: Pneumonia. Write 2 SMART problems with goals, interventions, rationales. 14 min.','30 min'],
+['Day 5','SBAR practice: Pneumonia and DVT handovers. Record yourself if possible. Play back and critique.','20 min'],
+['Day 6','Skills diagnostic: BGM + urinalysis + pain assessment. Time each. Log mistakes.','40 min'],
+['Day 7','Review mistake log. Repeat weakest station from this week. Rest.','20 min']
+]},
+{w:'Week 2',theme:'Full APIE across all scenarios',days:[
+['Day 8','Full APIE (all 4 stations back to back): Pneumonia.','90 min'],
+['Day 9','Full APIE: Chronic Heart Failure.','90 min'],
+['Day 10','Full APIE: Suspected DVT.','90 min'],
+['Day 11','Full APIE: Subdural Haematoma.','90 min'],
+['Day 12','Full APIE: Alzheimers (dementia, capacity, communication).. Focus on communication approach.','90 min'],
+['Day 13','Full APIE: End of Life. Focus on dignity, comfort and family communication.','90 min'],
+['Day 14','Mistake log review. Drug calculations — 20 questions without a calculator.','60 min']
+]},
+{w:'Week 3',theme:'Clinical skills — high risk first',days:[
+['Day 15','ANTT and wound dressing. Watch ANTT video first. Practice full station 3 times.','45 min'],
+['Day 16','IM injection + SC injection. Full medication safety checklist each attempt.','40 min'],
+['Day 17','IV cannula flush + VIP score. ANTT focus. What score triggers removal?','30 min'],
+['Day 18','BGM + MSU/urinalysis + CSU — run all three consecutively.','40 min'],
+['Day 19','Oxygen therapy + PEFR + inhaled medication.','35 min'],
+['Day 20','Fluid balance chart — complete a full 24-hour chart from scratch. MUST assessment.','35 min'],
+['Day 21','Skills circuit mock: ANTT wound, IM injection, BGM, oxygen. Timed. No assistance.','40 min']
+]},
+{w:'Week 4',theme:'Remaining skills + written stations',days:[
+['Day 22','Pressure area (Braden) + pain assessment (PQRST) + oral care.','40 min'],
+['Day 23','Catheter removal + CSU. Focus on post-procedure advice and void monitoring.','30 min'],
+['Day 24','Suppository + bowel assessment + MUST nutrition. Dignity focus throughout.','35 min'],
+['Day 25','NG tube safety — pH check protocol. When NOT to feed. What to escalate.','30 min'],
+['Day 26','Anti-embolism stockings + pre-operative check. Frequently appears in OSCE.','30 min'],
+['Day 27','PV written stations (10 min each): drug error, falsifying records, racism, possible abuse, impaired colleague.','50 min'],
+['Day 28','EBP written stations (10 min each): pressure ulcer prevention, smoking cessation, dementia/music therapy, bedside handover, diabetes education.','50 min']
+]},
+{w:'Week 5',theme:'Full mock week',days:[
+['Day 29','Full APIE mock: Ectopic Pregnancy. All 4 stations back to back with timer.','60 min'],
+['Day 30','Full APIE mock: Community Assessment.','60 min'],
+['Day 31','Full APIE mock: Homelessness & Complex Needs.','60 min'],
+['Day 32','Skills circuit 1: ANTT wound, IM injection, BGM, oxygen.','40 min'],
+['Day 33','Skills circuit 2: Fluid balance, urinalysis, pressure area, IV flush.','40 min'],
+['Day 34','Written circuit: PV + EBP + PV + EBP. 10 minutes each. No notes.','50 min'],
+['Day 35','Rest. Review mistake log only. No new content.','20 min']
+]},
+{w:'Week 6',theme:'Exam readiness',days:[
+['Day 36','Full 10-station mock exam 1. No stopping.','120 min'],
+['Day 37','Fix only the failed/borderline stations from mock 1. Nothing new.','60 min'],
+['Day 38','Full 10-station mock exam 2.','120 min'],
+['Day 39','Red flag day only: hand hygiene, ID, consent, SBAR, allergy check. Drill these 20 times each.','30 min'],
+['Day 40','Full 10-station mock exam 3.','120 min'],
+['Day 41','Light review: Code, common mistakes, SBAR script, PV opener, EBP closer.','30 min'],
+['Day 42','Rest. Prepare: ID documents, travel plan, smart clothing, sleep by 10pm, arrive 30 min early.','—']
+]}
+];
+const pvPrompts=[
+{t:'Drug error witnessed',f:'You observe a colleague administer the wrong dose of medication to a patient.'},
+{t:'Falsifying observations',f:'A staff member is writing down observations without actually taking them.'},
+{t:'Racism by a colleague',f:'A nurse makes a racist comment about a patient from an ethnic minority background.'},
+{t:'Possible patient abuse',f:'An older patient has unexplained bruising and appears reluctant to speak when their relative is present.'},
+{t:'Impaired colleague',f:'You suspect a colleague has come to work under the influence of alcohol.'},
+{t:'Bullying on the ward',f:'A senior nurse regularly humiliates junior staff members in front of patients.'},
+{t:'Social media misuse',f:'A colleague posts photos from the ward on social media without patient consent.'},
+{t:'Confidentiality breach',f:'A staff member discusses a patient\'s HIV status loudly in a public area.'},
+{t:'Patient refuses treatment',f:'A patient with full mental capacity refuses a blood transfusion on religious grounds.'},
+{t:'Near miss not reported',f:'You discover a near-miss medication error that was not reported or documented.'},
+{t:'Duty of candour',f:'A patient suffered harm due to a nursing error. How do you respond as a registered nurse?'},
+{t:'Unsafe staffing levels',f:'You are working on a shift with staffing levels you believe are unsafe. What do you do?'}
+];
+const ebpPrompts=[
+{t:'Pressure ulcer prevention',f:'A study compares 2-hourly repositioning versus standard care in preventing pressure ulcers.'},
+{t:'Bedside handover',f:'Research suggests patient-centred bedside handover is safer than traditional desk handover.'},
+{t:'Smoking cessation',f:'Evidence for brief nursing interventions and NRT for smoking cessation in hospital settings.'},
+{t:'Dementia and music therapy',f:'A RCT examines impact of music therapy on agitation in patients with dementia.'},
+{t:'Type 2 diabetes education',f:'Structured group education vs unstructured advice for Type 2 diabetes management.'},
+{t:'Venous leg ulcer dressings',f:'Manuka honey dressings compared to alginate dressings for venous leg ulcer healing.'},
+{t:'CAUTI prevention',f:'Strict aseptic technique versus standard care in catheter-associated UTI prevention.'},
+{t:'Multi-factorial fall prevention',f:'Evidence for multi-component fall prevention programmes in acute inpatient settings.'},
+{t:'Restraint in dementia',f:'Physical restraint compared to therapeutic distraction in agitated dementia patients.'},
+{t:'Female MI presentation',f:'Evidence on recognition disparities in female myocardial infarction symptom presentation.'},
+{t:'Fever management in children',f:'Paracetamol versus ibuprofen for childhood fever: which has better evidence?'},
+{t:'Cervical cancer screening',f:'Frequency and age range for cervical screening — what does current UK guidance recommend?'}
+];
+const flashcards=[
+{q:'What is the universal safety opening script?',a:'Hand hygiene → Introduce (name, role) → Confirm full name and DOB → Explain task → Gain consent → Check comfort, privacy, dignity → Check allergies where relevant.'},
+{q:'What are the 5 Rights + 2 of medication administration?',a:'Right patient · Right drug · Right dose · Right route · Right time + Right documentation · Right to refuse.'},
+{q:'When must you escalate NEWS2?',a:'1–4: reassess 4–6 hourly. 5–6 OR any single parameter = 3: urgent review within 1 hour. ≥7: emergency response now. New confusion (C/V/P/U) = always score 3.'},
+{q:'What are the 4 parts of SBAR?',a:'S – Situation (who, where, why calling). B – Background (admission reason, PMH, medications). A – Assessment (observations, NEWS2, specific concern). R – Recommendation (what you need).'},
+{q:'What is the ABCDE assessment order?',a:'A: Airway (look/listen/feel, position). B: Breathing (RR, SpO₂, work of breathing). C: Circulation (HR, BP, CRT, skin). D: Disability (ACVPU/GCS, BM, pupils). E: Exposure (temp, skin, wounds, pain).'},
+{q:'What SpO₂ triggers oxygen therapy?',a:'SpO₂ <94% in most adults (88–92% target for COPD/type 2 respiratory failure). Check the prescription for the target saturation range first.'},
+{q:'What is ANTT and what is a key site?',a:'Aseptic Non-Touch Technique. Key site = part that must not be contaminated (wound, cannula tip, syringe tip). Never touch key sites. Never contaminate the sterile field.'},
+{q:'What is the safe pH range for NG tube feeding?',a:'pH ≤5.5 = gastric → safe to feed. pH 5.5–6 = borderline → do NOT feed → escalate. pH >6 = not gastric → never feed → escalate for X-ray. NEVER use air auscultation.'},
+{q:'What do VIP scores 2 and above mean?',a:'VIP 1: slight pain/redness — observe hourly. VIP 2: pain, redness, swelling — remove cannula and re-site. VIP 3+: palpable cord or worse — remove immediately, escalate, consider IV antibiotics.'},
+{q:'What is hypoglycaemia and how do you act?',a:'BM <4 mmol/L. If conscious and able to swallow: 15–20g fast-acting glucose (Lucozade, glucose tablets). Recheck in 15 min. If unconscious or unable to swallow: escalate IMMEDIATELY — IV dextrose or glucagon.'},
+{q:'What is the PQRST pain assessment tool?',a:'P = Provocation/Palliation. Q = Quality/character. R = Region/Radiation. S = Severity (0–10). T = Timing (constant/intermittent, onset, duration).'},
+{q:'What is the PV opening sentence?',a:'"My first priority would be patient safety. I would remain professional, act within the NMC Code, escalate to the appropriate senior, document factually, maintain confidentiality, and reflect to learn."'},
+{q:'What is the safe EBP closing?',a:'"I would not change practice based on a single study. I would consider quality of evidence, limitations, local policy, NICE guidance, patient preference and clinical judgement."'},
+{q:'What are consent requirements?',a:'Patient must have: capacity, sufficient information, freedom from coercion. Verbal consent is sufficient for most nursing procedures. Document it. If no capacity: best interests decision with MDT and family.'},
+{q:'What is the MUST nutritional screening score meaning?',a:'Score 0 = low risk (routine care). Score 1 = medium risk (observe). Score ≥2 = high risk (refer dietitian, commence nutritional support, monitor weekly).'},
+{q:'What is the NMC Code\'s 4 themes?',a:'1. Prioritise people (needs, dignity, rights). 2. Practise effectively (assessment, competence). 3. Preserve safety (escalate, raise concerns, candour). 4. Promote professionalism (honesty, integrity, trust).'},
+{q:'What documentation principles apply in the OSCE?',a:'Accurate, clear, contemporaneous (written at the time), factual (no opinion), dated and timed, no unsafe abbreviations, legible, includes name and designation. Cross errors with single line and initial — never use correction fluid.'},
+{q:'What are the Braden Scale categories?',a:'6 categories: Sensory perception, Moisture, Activity, Mobility, Nutrition, Friction/Shear. Total score 6–23. Score ≤18 = at risk. Score ≤12 = high risk.'},
+{q:'What RR gives a NEWS2 score of 3?',a:'RR ≤8 or RR ≥25 both score 3 — the maximum single score. Either alone requires urgent review. Normal adult RR is 12–20.'},
+{q:'What is the ACVPU scale?',a:'A = Alert. C = Confused (new onset). V = Responds to Voice. P = Responds to Pain. U = Unresponsive. Any change from Alert = NEWS2 score of 3 → escalate regardless of total.'},
+{q:'What are the 7 signs of wound infection? (SEWING)',a:'S – Swelling. E – Erythema (redness). W – Warmth. I – Increasing exudate. N – New odour. G – General deterioration in patient.'},
+{q:'What is the formula for drops per minute?',a:'Drops per minute = (Volume in mL × Drop factor) ÷ (Time in minutes). Common drop factors: 20 drops/mL (standard), 60 drops/mL (microdrip).'},
+{q:'What should you do if you witness a serious safety error by a colleague?',a:'Stop the procedure calmly if safe. Correct with fresh equipment if needed. Escalate to senior immediately. Complete a Datix/incident report. Follow duty of candour. Document factually. Do not cover up.'},
+{q:'What is the normal adult urine output and when is oliguria present?',a:'Normal: 0.5–1 mL/kg/hr or approximately 400–2000 mL/day. Oliguria: <0.5 mL/kg/hr or <400 mL/24hr. Escalate to medical team if oliguria persists for >2 hours.'},
+{q:'When is a single NEWS2 parameter of 3 a clinical emergency?',a:'Always. Any single parameter scoring 3 triggers urgent review (within 1 hour) regardless of the total score. RR ≤8 or ≥25, SpO₂ ≤91%, systolic BP ≤90 or ≥220, HR ≤40 or ≥131, temperature ≤35°C, ACVPU C/V/P/U all score 3.'}
+];
+const news2Params=[
+{label:'Resp Rate',opts:[{t:'≤8',s:3},{t:'9–11',s:1},{t:'12–20',s:0},{t:'21–24',s:2},{t:'≥25',s:3}]},
+{label:'SpO₂ Scale 1',opts:[{t:'≤91%',s:3},{t:'92–93%',s:2},{t:'94–95%',s:1},{t:'≥96%',s:0}]},
+{label:'Air or O₂',opts:[{t:'Air',s:0},{t:'On O₂',s:2}]},
+{label:'Systolic BP',opts:[{t:'≤90',s:3},{t:'91–100',s:2},{t:'101–110',s:1},{t:'111–219',s:0},{t:'≥220',s:3}]},
+{label:'Pulse',opts:[{t:'≤40',s:3},{t:'41–50',s:1},{t:'51–90',s:0},{t:'91–110',s:1},{t:'111–130',s:2},{t:'≥131',s:3}]},
+{label:'ACVPU',opts:[{t:'Alert',s:0},{t:'Confused',s:3},{t:'Voice',s:3},{t:'Pain',s:3},{t:'Unresponsive',s:3}]},
+{label:'Temperature',opts:[{t:'≤35.0°C',s:3},{t:'35.1–36.0°C',s:1},{t:'36.1–38.0°C',s:0},{t:'38.1–39.0°C',s:1},{t:'≥39.1°C',s:2}]}
+];
+const drugQuestions=[
+{q:'Patient prescribed paracetamol 1g. Stock: 500mg tablets. How many tablets?',a:2,unit:'tablets',w:'1000 ÷ 500 = 2 tablets'},
+{q:'Prescribe amoxicillin 250mg oral. Stock: 125mg/5mL syrup. What volume?',a:10,unit:'mL',w:'(250 ÷ 125) × 5 = 10 mL'},
+{q:'500 mL 0.9% saline to run over 4 hours. What is the rate in mL/hr?',a:125,unit:'mL/hr',w:'500 ÷ 4 = 125 mL/hr'},
+{q:'IV antibiotics: 250 mL to infuse over 2 hours. Rate in mL/hr?',a:125,unit:'mL/hr',w:'250 ÷ 2 = 125 mL/hr'},
+{q:'Patient prescribed metformin 1.5g. Stock tablets are 500mg. How many tablets?',a:3,unit:'tablets',w:'1500 ÷ 500 = 3 tablets'},
+{q:'500 mL bag over 6 hours. Drop factor 20 drops/mL. Calculate drops per minute.',a:28,unit:'drops/min',w:'(500 × 20) ÷ (6 × 60) = 10000 ÷ 360 = 27.7 → 28 drops/min'},
+{q:'Prescribed co-amoxiclav 375mg. Stock: 250mg/5mL suspension. What volume?',a:7.5,unit:'mL',w:'(375 ÷ 250) × 5 = 7.5 mL'},
+{q:'Patient needs morphine 5mg SC. Stock ampoule: 10mg/mL. What volume to draw up?',a:0.5,unit:'mL',w:'(5 ÷ 10) × 1 = 0.5 mL'},
+{q:'1000 mL over 8 hours. Calculate infusion rate in mL/hr.',a:125,unit:'mL/hr',w:'1000 ÷ 8 = 125 mL/hr'},
+{q:'Prescribed ondansetron 4mg IV. Stock: 2mg/mL (2 mL ampoule). What volume?',a:2,unit:'mL',w:'(4 ÷ 2) × 1 = 2 mL'},
+{q:'Patient prescribed furosemide 80mg. Stock: 40mg tablets. How many tablets?',a:2,unit:'tablets',w:'80 ÷ 40 = 2 tablets'},
+{q:'1200 mL over 10 hours. Drop factor 15 drops/mL. Calculate drops per minute.',a:30,unit:'drops/min',w:'(1200 × 15) ÷ (10 × 60) = 18000 ÷ 600 = 30 drops/min'},
+{q:'Prescribed digoxin 125 micrograms. Stock: 62.5 micrograms per tablet. How many tablets?',a:2,unit:'tablets',w:'125 ÷ 62.5 = 2 tablets'},
+{q:'Enoxaparin 1.5mg/kg SC for a 70kg patient. What is the dose?',a:105,unit:'mg',w:'1.5 × 70 = 105 mg'},
+{q:'Patient needs 1.2g amoxicillin IV. Stock vials are 600mg. How many vials?',a:2,unit:'vials',w:'1200 ÷ 600 = 2 vials'}
+];
+const reading=[
+{doc:'Candidate Information Booklet',items:['Becoming familiar with UK nursing practice','Overview of the OSCE structure and format','Communication skills requirements','How stations are marked and assessed','Unsafe practice — instant fail rules','Passing standard and results process']},
+{doc:'Preparing for Your OSCE (NMC)',items:['How to prepare in advance','What to expect at the test centre','Structure of each APIE station','Clinical proficiencies tested','Common errors and how to avoid them','General tips and exam-day approach']},
+{doc:'NMC Code 2018',items:['Prioritise people — needs, dignity, rights','Practise effectively — assessment and competence','Preserve safety — escalate and raise concerns','Promote professionalism — honesty and integrity','Accurate records and contemporaneous documentation','Confidentiality requirements','Duty of candour','Raising concerns (whistleblowing)']},
+{doc:'Adult Nursing Blueprint — ToC 2021',items:['7 platforms of proficiency','Patient Safety Proficiencies (PSP)','Communication and relationship management','Assessment proficiencies → station 1','Planning proficiencies → station 2','Implementation proficiencies → station 3','Evaluation proficiencies → station 4']},
+{doc:'Supporting Documents (charts and tools)',items:['NEWS2 chart — all parameters memorised','Medication prescription chart — reading safely','MUST nutritional screening tool','Pain assessment tool (NRS/FACES)','Braden pressure ulcer risk scale','Fluid balance chart format','VIP (Visual Infusion Phlebitis) score','Bristol Stool Chart — Types 1–7','BGM chart and recording format','Urinalysis dipstick result chart','Wells DVT criteria','Pre-operative WHO checklist']},
+{doc:'Equipment List — ToC 2021',items:['PPE: gloves, aprons, eye protection, masks','Sharps bin — correct use','Medication equipment: syringes, needles','Oxygen delivery equipment','ANTT dressing pack components','Urine testing equipment','Injection training arm/pad']},
+{doc:'Test Specification',items:['10-station design: APIE + 4 skills + PV + EBP','Station timings: Assessment 20, Planning 14, Implementation 15, Evaluation 8, Skills 8–21, Written 10 min','Marking criteria and weighting','Serious error instant-fail rule','Support materials available in centre','Dress code and personal conduct']}
+];
+const readinessItems=['I run 3 mock APIE stations with zero serious safety errors','I perform hand hygiene before every patient contact — without being reminded','Assessment ≤20 min and Planning ≤14 min every time','My SBAR escalation is complete and fluent','I can perform 5 skills with zero errors three times in a row','My PV opening sentence is automatic — no thinking','I complete EBP without saying I would change practice based on one study','I have passed at least 2 complete 10-station mock exams','My mistake log has fewer than 3 open items','I have read all 7 NMC blueprint documents'];
+
+// ── STATS ─────────────────────────────────────────────────
+function renderStats(){
+  const td=weekData.reduce((a,w)=>a+w.days.length,0);
+  const dd=Object.values(state.done).filter(Boolean).length;
+  const ss=Object.values(state.skillDone).filter(v=>v==='safe').length;
+  const rd=Object.values(state.reading).filter(Boolean).length;
+  const rt=reading.reduce((a,r)=>a+r.items.length,0);
+  const om=state.mistakes.filter(m=>m.status!=='Fixed').length;
+  const statsData=[['Plan',Math.round(dd/td*100)+'%',dd+'/'+td],['Skills',ss+'/'+skills.length,'safe'],['Reading',Math.round(rd/rt*100)+'%',rd+'/'+rt],['Mistakes',om,om===0?'✓ all fixed':'open']];
+  ['practice-hstats','track-hstats'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.innerHTML=statsData.map(d=>`<div style="background:#fff;border:1px solid var(--border);border-radius:9px;padding:7px 12px;min-width:80px;box-shadow:0 1px 3px rgba(0,0,0,.05);"><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;">${d[0]}</div><div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--em);margin-top:2px;">${d[1]}</div><div style="font-size:9px;color:var(--faint);margin-top:1px;">${d[2]}</div></div>`).join('');
+  });
+}
+
+function renderReadiness(){
+  document.getElementById('readiness-checks').innerHTML=readinessItems.map((it,i)=>`<label class="check"><input type="checkbox" ${state.readiness[i]?'checked':''} onchange="state.readiness[${i}]=this.checked;save()"><span>${it}</span></label>`).join('');
+}
+
+// ── COACHING SESSION ──────────────────────────────────────
+let currentScenario=null, currentStationType='Assessment', sessionChecks={};
+
+function renderScenarioCards(){
+  const sc=document.getElementById('scenarioCards');
+  if(!sc)return;
+  sc.innerHTML=scenarios.map(s=>`
+    <div data-name="${s.name}" onclick="selectScenario(this.dataset.name)" id="sc-card-${s.name.replace(/[^a-z]/gi,'_')}" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:.12s;background:var(--surface);">
+      <div style="font-weight:700;font-size:12px;margin-bottom:3px;">${s.name}</div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.4;">${s.patient||s.brief}</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;">${s.tags.map(t=>`<span class="pill pill-muted">${t}</span>`).join('')}</div>
+    </div>`).join('');
+  selectScenario(scenarios[0].name);
+}
+
+function selectScenario(name){
+  currentScenario=scenarios.find(s=>s.name===name);
+  document.querySelectorAll('[id^="sc-card-"]').forEach(c=>c.style.borderColor='var(--border)');
+  document.querySelectorAll('[id^="sc-card-"]').forEach(c=>c.style.background='var(--surface)');
+  const card=document.getElementById('sc-card-'+name.replace(/[^a-z]/gi,'_'));
+  if(card){card.style.borderColor='var(--em)';card.style.background='var(--em-dim)';}
+}
+
+function renderStationTypeCards(){
+  const el=document.getElementById('stationTypeCards');
+  if(!el)return;
+  const types=[
+    {t:'Assessment',mins:20,desc:'A–E, history, obs, escalation',col:'var(--em)'},
+    {t:'Planning',mins:14,desc:'SMART goals, interventions, rationale',col:'var(--blue)'},
+    {t:'Implementation',mins:15,desc:'Carry out the intervention safely',col:'var(--amber)'},
+    {t:'Evaluation',mins:8,desc:'Review goals, next steps, handover',col:'var(--purple)'}
+  ];
+  el.innerHTML=types.map(tp=>`
+    <div data-type="${tp.t}" onclick="selectStationType(this.dataset.type)" id="stt-${tp.t}" style="padding:12px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:.12s;text-align:center;background:var(--surface);">
+      <div style="font-family:'Fraunces',serif;font-weight:900;font-size:14px;color:${tp.col};">${tp.t}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin:3px 0;">${tp.mins} min</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.4;">${tp.desc}</div>
+    </div>`).join('');
+  selectStationType('Assessment');
+}
+
+function selectStationType(type){
+  currentStationType=type;
+  document.querySelectorAll('[id^="stt-"]').forEach(c=>{c.style.borderColor='var(--border)';c.style.background='var(--surface)';});
+  const el=document.getElementById('stt-'+type);
+  const colMap={Assessment:'var(--em)',Planning:'var(--blue)',Implementation:'var(--amber)',Evaluation:'var(--purple)'};
+  if(el){el.style.borderColor=colMap[type];el.style.background='rgba(0,0,0,.03)';}
+}
+
+function randomScenario(){
+  const sc=scenarios[Math.floor(Math.random()*scenarios.length)];
+  const types=['Assessment','Planning','Implementation','Evaluation'];
+  selectScenario(sc.name);
+  selectStationType(types[Math.floor(Math.random()*types.length)]);
+}
+
+function startCoachingSession(){
+  if(!currentScenario){alert('Select a scenario.');return;}
+  sessionChecks={};
+  document.getElementById('coach-setup').style.display='none';
+  document.getElementById('coach-session').style.display='block';
+  renderPatientCard('patient-card-render',false);
+  renderPatientCard('patient-card-mini',true);
+  renderTask();
+  renderFocus();
+  renderSteps();
+  renderDebrief();
+  const st=stationTemplates[currentStationType];
+  setTimer(st.mins,currentScenario.name+' · '+currentStationType);
+  goPhase('brief');
+}
+
+function resetCoaching(){
+  timerPause();timerReset();
+  document.getElementById('coach-setup').style.display='block';
+  document.getElementById('coach-session').style.display='none';
+}
+
+function goPhase(phase){
+  ['brief','station','debrief'].forEach(p=>{
+    document.getElementById('phase-'+p).style.display=p===phase?'block':'none';
+    const pt=document.getElementById('ptab-'+p);
+    if(pt){
+      const active=p===phase;
+      const col=p==='brief'?'var(--em)':p==='station'?'var(--blue)':'var(--purple)';
+      pt.style.background=active?col:'var(--surface2)';
+      pt.style.color=active?'#fff':'var(--muted)';
+    }
+  });
+}
+
+function renderPatientCard(containerId, mini){
+  const sc=currentScenario;
+  if(!sc)return;
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  const news2val=sc.vitals?.news2||'—';
+  const n2num=parseInt(news2val);
+  const n2col=n2num>=7?'var(--red)':n2num>=5?'var(--amber)':n2num>=1?'var(--amber)':'var(--em)';
+  
+  if(mini){
+    el.innerHTML=`<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;">
+      <div style="font-weight:700;font-size:12px;">${sc.name}: ${sc.patient||''}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px;">${sc.brief}</div>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;font-size:11px;">
+        ${sc.vitals?Object.entries(sc.vitals).map(([k,v])=>`<span><b style="color:var(--muted);">${k.toUpperCase()}:</b> <span style="color:${k==='news2'?n2col:'var(--ink)'};">${v}</span></span>`).join(''):''}
+      </div>
+      <div style="font-size:11px;margin-top:6px;"><span style="font-weight:700;color:var(--red);">⚠ Allergies: </span>${sc.allergies||'NKDA'}</div>
+    </div>`;
+    return;
+  }
+  
+  const vitalsHtml=sc.vitals?`<div class="vitals-grid">${Object.entries(sc.vitals).map(([k,v])=>{
+    const val=parseInt(v);
+    const cls=k==='news2'?(val>=7?'v-crit':val>=5?'v-warn':'v-ok'):'';
+    return `<div class="vital-box"><div class="vital-label">${k.toUpperCase()}</div><div class="vital-val ${cls}">${v}</div></div>`;
+  }).join('')}</div>`:'';
+  
+  el.innerHTML=`<div class="patient-card">
+    <div class="patient-name">${sc.patient||sc.name}</div>
+    <div class="patient-meta">${sc.brief}</div>
+    ${vitalsHtml}
+    <div class="patient-details">
+      <div class="pd-row"><div class="pd-label">PMH</div><div class="pd-val">${sc.pmh||'Not documented'}</div></div>
+      <div class="pd-row"><div class="pd-label">Medications</div><div class="pd-val">${sc.meds||'Not documented'}</div></div>
+      <div class="pd-row" style="grid-column:1/-1"><div class="pd-label">Allergies</div><div class="pd-val allergy-flag">${sc.allergies||'NKDA'}</div></div>
+    </div>
+  </div>`;
+}
+
+function renderTask(){
+  const st=stationTemplates[currentStationType];
+  const taskDesc={
+    Assessment: 'You are the nurse caring for this patient. Carry out a comprehensive nursing assessment using the ABCDE framework. Identify at least two clinical concerns and escalate appropriately using SBAR.',
+    Planning: 'Using the assessment findings, write a nursing care plan for this patient. Identify two priority nursing problems, write SMART goals, and outline interventions with rationale.',
+    Implementation: 'Carry out the required nursing intervention for this patient. Ensure safe technique, clear communication and accurate documentation throughout.',
+    Evaluation: 'Evaluate the patient against their care plan goals. State whether goals were met, partly met or not met. Outline next nursing actions and escalate any concerns.'
+  };
+  document.getElementById('task-render').innerHTML=`
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+      <span class="pill pill-blue">${currentStationType}</span>
+      <span class="pill pill-amber">${st.mins} min</span>
+    </div>
+    <p style="font-weight:600;margin-bottom:8px;">${taskDesc[currentStationType]}</p>
+    <div class="notice">${st.output}</div>`;
+}
+
+function renderFocus(){
+  const sc=currentScenario;
+  const el=document.getElementById('focus-render');
+  if(!el||!sc)return;
+  el.innerHTML=`<div class="step-list">${sc.focus.map(f=>`<div class="step-item"><span class="step-icon">→</span><span>${f}</span></div>`).join('')}</div>`;
+}
+
+function renderSteps(){
+  const st=stationTemplates[currentStationType];
+  document.getElementById('stationType-label').textContent=currentStationType+' ('+st.mins+' min)';
+  document.getElementById('steps-render').innerHTML=st.steps.map((s,i)=>`
+    <div style="display:flex;gap:8px;align-items:flex-start;padding:7px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:12px;">
+      <span style="color:var(--em);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:2px;flex-shrink:0;">${String(i+1).padStart(2,'0')}</span>
+      <span>${s}</span>
+    </div>`).join('');
+}
+
+function renderDebrief(){
+  // Safety checklist
+  document.getElementById('debrief-safety').innerHTML=masterSafety.map((item,i)=>`
+    <div class="mark-row">
+      <span class="mark-text">${item}</span>
+      <div class="mark-status">
+        <button class="mark-btn ${sessionChecks['s'+i]==='done'?'done':''}" onclick="markItem('s'+${i},'done')">✓ Done</button>
+        <button class="mark-btn ${sessionChecks['s'+i]==='missed'?'missed':''}" onclick="markItem('s'+${i},'missed')">✗ Missed</button>
+      </div>
+    </div>`).join('');
+  
+  // Serious errors
+  const seriousErrors=['Missed hand hygiene','No patient ID check','No consent','Allergy/medication error','ANTT contamination','Unsafe sharps','Failed to escalate','Breach of confidentiality'];
+  document.getElementById('debrief-serious').innerHTML=seriousErrors.map((item,i)=>`
+    <div class="mark-row">
+      <span class="mark-text danger-text" style="color:var(--red);">${item}</span>
+      <div class="mark-status">
+        <button class="mark-btn ${sessionChecks['e'+i]==='none'?'done':''}" onclick="markItem('e'+${i},'none')">✓ None</button>
+        <button class="mark-btn ${sessionChecks['e'+i]==='occurred'?'missed':''}" onclick="markItem('e'+${i},'occurred')">✗ Occurred</button>
+      </div>
+    </div>`).join('');
+
+  // Expected answers
+  const answers=expectedAnswers[currentScenario?.name]||currentScenario?.focus||[];
+  document.getElementById('debrief-expected').innerHTML=answers.map((ans,i)=>`
+    <div style="margin-bottom:8px;">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px;">Focus area ${i+1}: ${(currentScenario?.focus||[])[i]||'Clinical reasoning'}</div>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Hide answer':'▶ Reveal expected answer'">▶ Reveal expected answer</button>
+      <div class="expected-answer">${ans}</div>
+    </div>`).join('');
+  
+  updateDebriefScore();
+}
+
+function markItem(key, val){
+  sessionChecks[key]=val;
+  renderDebrief();
+  updateDebriefScore();
+}
+
+function updateDebriefScore(){
+  const done=masterSafety.filter((_,i)=>sessionChecks['s'+i]==='done').length;
+  const serious=['Missed hand hygiene','No patient ID check','No consent','Allergy/medication error','ANTT contamination','Unsafe sharps','Failed to escalate','Breach of confidentiality'];
+  const errors=serious.filter((_,i)=>sessionChecks['e'+i]==='occurred').length;
+  const pct=masterSafety.length>0?Math.round(done/masterSafety.length*100):0;
+  const s=document.getElementById('db-safe');const t=document.getElementById('db-total');const e=document.getElementById('db-serious');const p=document.getElementById('db-pct');const r=document.getElementById('session-result-pill');
+  if(s)s.textContent=done;if(t)t.textContent=masterSafety.length;if(e){e.textContent=errors;e.style.color=errors>0?'var(--red)':'var(--em)';};if(p)p.textContent=pct+'%';
+  if(r){
+    const pass=errors===0&&pct>=67;
+    r.innerHTML=`<span class="pill" style="background:${pass?'var(--em-dim)':'var(--red-dim)'};color:${pass?'var(--em)':'var(--red)'};font-size:13px;padding:6px 12px;">${pass?'✓ PASS':'✗ NEEDS WORK'}</span>`;
+  }
+}
+
+function saveSession(){
+  const done=masterSafety.filter((_,i)=>sessionChecks['s'+i]==='done').length;
+  const errors=['e0','e1','e2','e3','e4','e5','e6','e7'].filter(k=>sessionChecks[k]==='occurred').length;
+  state.attempts.push({date:new Date().toLocaleString(),station:currentStationType,scenario:currentScenario?.name||'',score:done,total:masterSafety.length,serious:errors});
+  save();alert('Session saved!');
+}
+
+function logFromDebrief(){
+  switchSection('track');switchTab('mistakes','track');
+  if(currentScenario)document.getElementById('mStation').value=currentScenario.name+' '+currentStationType;
+}
+
+// ── TIMER ─────────────────────────────────────────────────
+let timerSecs=0,timerOrig=0,timerInt=null;
+function setTimer(mins,name){timerSecs=Math.round(mins*60);timerOrig=timerSecs;const l=document.getElementById('timerLabel');if(l)l.textContent=name;drawTime();}
+function drawTime(){
+  const m=String(Math.floor(timerSecs/60)).padStart(2,'0'),s=String(timerSecs%60).padStart(2,'0');
+  const d=document.getElementById('timerDisplay');if(d)d.textContent=`${m}:${s}`;
+  const pct=timerOrig?timerSecs/timerOrig:1;
+  const bar=document.getElementById('timerBar');const ptxt=document.getElementById('timerPct');
+  if(bar)bar.style.width=(pct*100)+'%';
+  if(ptxt)ptxt.textContent=Math.round(pct*100)+'% remaining';
+  const tb=document.getElementById('timerBlock');
+  if(tb){tb.classList.toggle('tw',pct<0.25&&pct>=0.1);tb.classList.toggle('td',pct<0.1&&pct>0);}
+}
+function timerStart(){if(timerInt)return;timerInt=setInterval(()=>{if(timerSecs>0){timerSecs--;drawTime();}else{timerPause();alert('⏰ Time is up! Move to debrief.');goPhase('debrief');}},1000);}
+function timerPause(){clearInterval(timerInt);timerInt=null;}
+function timerReset(){timerPause();timerSecs=timerOrig;drawTime();}
+
+// ── FULL MOCK ─────────────────────────────────────────────
+let mockStations=[], mockIdx=0, mockResults=[], mockScenario=null;
+let mockTimerSecs=0, mockTimerOrig=0, mockTimerInt=null;
+
+function buildMock(){
+  const sc=scenarios[Math.floor(Math.random()*scenarios.length)];
+  mockScenario=sc;
+  const sp=[...skills].sort(()=>Math.random()-.5).slice(0,4);
+  const pv=pvPrompts[Math.floor(Math.random()*pvPrompts.length)];
+  const ebp=ebpPrompts[Math.floor(Math.random()*ebpPrompts.length)];
+  mockStations=[
+    {n:1,type:'Assessment',topic:sc.name,mins:20,isAPie:true},
+    {n:2,type:'Planning',topic:sc.name,mins:14,isAPie:true},
+    {n:3,type:'Implementation',topic:sc.name,mins:15,isAPie:true},
+    {n:4,type:'Evaluation',topic:sc.name,mins:8,isAPie:true},
+    ...sp.map((s,i)=>({n:5+i,type:'Skill',topic:s.name,mins:s.mins,isAPie:false})),
+    {n:9,type:'PV',topic:pv.t,mins:10,isAPie:false},
+    {n:10,type:'EBP',topic:ebp.t,mins:10,isAPie:false}
+  ];
+  mockResults=mockStations.map(()=>({result:'notdone',error:'none',note:''}));
+  mockIdx=0;
+
+  // Show plan view
+  document.getElementById('mock-setup').style.display='block';
+  document.getElementById('mock-runner').style.display='none';
+  document.getElementById('mock-results').style.display='none';
+  document.getElementById('mock-plan-view').style.display='block';
+  document.getElementById('mock-scenario-title').textContent='Mock OSCE — '+sc.name+' scenario';
+
+  // Render station list
+  const totalMins=mockStations.reduce((a,s)=>a+s.mins,0);
+  document.getElementById('mock-station-list').innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px;">
+      <div class="score-cell"><div class="sc-num">${mockStations.length}</div><div class="sc-label">Stations</div></div>
+      <div class="score-cell"><div class="sc-num">${totalMins}</div><div class="sc-label">Total mins</div></div>
+      <div class="score-cell"><div class="sc-num">0</div><div class="sc-label">Serious errors to pass</div></div>
+      <div class="score-cell"><div class="sc-num">4</div><div class="sc-label">APIE stations</div></div>
+      <div class="score-cell"><div class="sc-num">6</div><div class="sc-label">Other stations</div></div>
+    </div>
+    <table><thead><tr><th>#</th><th>Type</th><th>Topic</th><th>Time</th><th>Status</th></tr></thead>
+    <tbody>${mockStations.map((s,i)=>`<tr id="mock-row-${i}">
+      <td class="mono">${s.n}</td>
+      <td><span class="pill ${s.isAPie?'pill-em':s.type==='PV'||s.type==='EBP'?'pill-blue':'pill-amber'}">${s.type}</span></td>
+      <td><b>${s.topic}</b></td>
+      <td class="mono">${s.mins} min</td>
+      <td id="mock-status-${i}"><span class="pill pill-muted">Pending</span></td>
+    </tr>`).join('')}</tbody></table>`;
+}
+
+function startMockRun(){
+  document.getElementById('mock-setup').style.display='none';
+  document.getElementById('mock-runner').style.display='block';
+  document.getElementById('mock-results').style.display='none';
+  mockIdx=0;
+  renderMockStation();
+}
+
+function renderMockStation(){
+  if(mockIdx>=mockStations.length){showMockResults();return;}
+  const st=mockStations[mockIdx];
+  const sc=scenarios.find(s=>s.name===st.topic)||mockScenario;
+
+  // Update station header
+  document.getElementById('mock-station-num').textContent=st.n;
+  document.getElementById('mock-station-title').textContent=st.type+(st.topic!==st.type?' — '+st.topic:'');
+
+  // Progress dots
+  document.getElementById('mock-progress-dots').innerHTML=mockStations.map((s,i)=>{
+    const res=mockResults[i].result;
+    const col=i<mockIdx?(res==='pass'?'var(--em)':res==='borderline'?'var(--amber)':res==='fail'?'var(--red)':'var(--faint)'):i===mockIdx?'var(--blue)':'var(--border2)';
+    return `<div style="height:8px;border-radius:4px;background:${col};transition:.3s;" title="Station ${s.n}: ${s.type}"></div>`;
+  }).join('');
+
+  // Patient card (for APIE stations)
+  const pcEl=document.getElementById('mock-patient-card');
+  if(st.isAPie && sc && sc.vitals){
+    const n2=parseInt(sc.vitals.news2||0);
+    const n2col=n2>=7?'var(--red)':n2>=5?'var(--amber)':'var(--em)';
+    pcEl.innerHTML=`<div style="background:linear-gradient(135deg,#f0faf6,#f7fbff);border:1.5px solid rgba(11,168,122,.2);border-radius:12px;padding:13px;">
+      <div style="font-weight:700;font-size:13px;margin-bottom:2px;">${sc.patient||sc.name}</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${sc.brief}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:11px;">
+        ${Object.entries(sc.vitals).map(([k,v])=>`<span><b style="color:var(--muted);text-transform:uppercase;font-size:9px;">${k}:</b> <b style="color:${k==='news2'?n2col:'var(--ink)'};">${v}</b></span>`).join('')}
+      </div>
+      <div style="font-size:11px;margin-top:6px;"><b style="color:var(--red);">⚠ Allergies:</b> ${sc.allergies||'NKDA'}</div>
+    </div>`;
+    pcEl.style.display='block';
+  } else if(!st.isAPie){
+    const desc=st.type==='PV'?`Professional Values — write for 10 minutes. Topic: "${st.topic}"`:
+               st.type==='EBP'?`Evidence Based Practice — write for 10 minutes. Topic: "${st.topic}"`:
+               `Clinical Skill: ${st.topic}`;
+    pcEl.innerHTML=`<div class="info-box"><b>Station type:</b> ${st.type}<br><br>${desc}</div>`;
+    pcEl.style.display='block';
+  }
+
+  // Task title and description
+  const taskDescs={
+    Assessment:'Carry out a comprehensive nursing assessment using ABCDE. Identify at least 2 clinical concerns. Escalate using SBAR.',
+    Planning:'Write a nursing care plan. Two priority nursing problems, SMART goals, interventions with rationale, review time.',
+    Implementation:'Carry out the required nursing intervention safely. Communicate throughout. Document accurately.',
+    Evaluation:'Evaluate the patient against care plan goals. State met/partly met/not met with evidence. Give next actions.',
+    PV:'Write your response to the professional values scenario. Use the PV framework. 10 minutes.',
+    EBP:'Write your evidence-based practice response. Use the EBP framework. 10 minutes.',
+    Skill:'Perform the clinical skill safely using the correct technique and checklist.'
+  };
+  document.getElementById('mock-task-title').textContent=st.type+(st.isAPie?' Station':'');
+  document.getElementById('mock-task-desc').textContent=taskDescs[st.type]||('Complete the '+st.type+' station for '+st.topic);
+
+  // Steps (for APIE and skills)
+  const stepsEl=document.getElementById('mock-steps');
+  if(st.isAPie && stationTemplates[st.type]){
+    stepsEl.innerHTML=stationTemplates[st.type].steps.map((s,i)=>`
+      <div style="display:flex;gap:8px;padding:6px 9px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;font-size:11px;">
+        <span style="color:var(--em);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:9px;flex-shrink:0;margin-top:2px;">${String(i+1).padStart(2,'0')}</span>
+        <span>${s}</span>
+      </div>`).join('');
+  } else {
+    const sk=skills.find(s=>s.name===st.topic);
+    if(sk){
+      stepsEl.innerHTML=sk.must.map((m,i)=>`
+        <div style="display:flex;gap:8px;padding:6px 9px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;font-size:11px;">
+          <span style="color:var(--em);font-weight:700;font-size:9px;flex-shrink:0;margin-top:2px;">${i+1}.</span>
+          <span>${m}</span>
+        </div>`).join('');
+    } else {
+      stepsEl.innerHTML=`<div class="info-box" style="font-size:12px;">This is a written station. Write your response in timed conditions.</div>`;
+    }
+  }
+
+  // Set timer
+  mockTimerPause();
+  mockTimerSecs=st.mins*60;
+  mockTimerOrig=mockTimerSecs;
+  drawMockTimer();
+  document.getElementById('mock-timer-label').textContent=st.type+' · '+st.mins+' min';
+
+  // Reset mark buttons
+  resetMockMarkButtons();
+
+  // Update next button label
+  const nextBtn=document.getElementById('mock-next-btn');
+  nextBtn.textContent=mockIdx<mockStations.length-1?'Mark & next station →':'Mark & finish mock ✓';
+}
+
+function mockTimerStart(){
+  if(mockTimerInt)return;
+  mockTimerInt=setInterval(()=>{
+    if(mockTimerSecs>0){mockTimerSecs--;drawMockTimer();}
+    else{mockTimerPause();alert('⏰ Time is up for this station. Mark it and move on.');}
+  },1000);
+}
+function mockTimerPause(){clearInterval(mockTimerInt);mockTimerInt=null;}
+function mockTimerReset(){mockTimerPause();mockTimerSecs=mockTimerOrig;drawMockTimer();}
+function drawMockTimer(){
+  const m=String(Math.floor(mockTimerSecs/60)).padStart(2,'0'),s=String(mockTimerSecs%60).padStart(2,'0');
+  const d=document.getElementById('mock-timer-display');if(d)d.textContent=m+':'+s;
+  const pct=mockTimerOrig?mockTimerSecs/mockTimerOrig:1;
+  const bar=document.getElementById('mock-timer-bar');if(bar)bar.style.width=(pct*100)+'%';
+  const ptxt=document.getElementById('mock-timer-pct');if(ptxt)ptxt.textContent=Math.round(pct*100)+'% remaining';
+  const tb=document.getElementById('mock-timer-block');
+  if(tb){tb.classList.toggle('tw',pct<0.25&&pct>=0.1);tb.classList.toggle('td',pct<0.1&&pct>0);}
+}
+
+function mockMark(result){
+  mockResults[mockIdx].result=result;
+  resetMockMarkButtons();
+  const map={pass:'mock-mark-pass',borderline:'mock-mark-borderline',fail:'mock-mark-fail',notdone:'mock-mark-notdone'};
+  const colMap={pass:'btn-em',borderline:'btn-amber',fail:'btn-red',notdone:'btn-ghost'};
+  const el=document.getElementById(map[result]);
+  if(el){el.className='btn '+colMap[result];el.style.fontWeight='700';}
+}
+function mockError(val){
+  mockResults[mockIdx].error=val;
+  const noneEl=document.getElementById('mock-err-none');
+  const yesEl=document.getElementById('mock-err-yes');
+  if(noneEl)noneEl.className='btn '+(val==='none'?'btn-em':'btn-ghost');
+  if(yesEl)yesEl.className='btn '+(val==='yes'?'btn-red':'btn-ghost');
+}
+function resetMockMarkButtons(){
+  ['mock-mark-pass','mock-mark-borderline','mock-mark-fail','mock-mark-notdone'].forEach(id=>{
+    const el=document.getElementById(id);if(el){el.className='btn btn-ghost';el.style.fontWeight='';}
+  });
+  const noneEl=document.getElementById('mock-err-none');const yesEl=document.getElementById('mock-err-yes');
+  if(noneEl)noneEl.className='btn btn-ghost';if(yesEl)yesEl.className='btn btn-ghost';
+  // Re-apply current station's saved marks
+  const r=mockResults[mockIdx];
+  if(r.result!=='notdone'){mockMark(r.result);}
+  if(r.error!=='none'){mockError(r.error);}
+}
+
+function mockNextStation(){
+  // Save note
+  const noteEl=document.getElementById('mock-station-note');
+  if(noteEl){mockResults[mockIdx].note=noteEl.value;noteEl.value='';}
+  // Auto-mark as not done if not marked
+  if(mockResults[mockIdx].result==='notdone')mockResults[mockIdx].result='notdone';
+  mockTimerPause();
+  mockIdx++;
+  if(mockIdx>=mockStations.length){showMockResults();}
+  else{renderMockStation();}
+}
+
+function mockAbandon(){
+  if(!confirm('Abandon this mock exam? Progress will be lost.'))return;
+  mockTimerPause();
+  document.getElementById('mock-setup').style.display='block';
+  document.getElementById('mock-runner').style.display='none';
+  document.getElementById('mock-results').style.display='none';
+  document.getElementById('mock-plan-view').style.display='none';
+}
+
+function showMockResults(){
+  mockTimerPause();
+  document.getElementById('mock-setup').style.display='none';
+  document.getElementById('mock-runner').style.display='none';
+  document.getElementById('mock-results').style.display='block';
+
+  const pass=mockResults.filter(r=>r.result==='pass').length;
+  const borderline=mockResults.filter(r=>r.result==='borderline').length;
+  const fail=mockResults.filter(r=>r.result==='fail').length;
+  const notdone=mockResults.filter(r=>r.result==='notdone').length;
+  const serious=mockResults.filter(r=>r.error==='yes').length;
+  const overall=serious>0?'FAIL':fail>0?'FAIL':notdone>2?'INCOMPLETE':pass+borderline>=8?'PASS':'FAIL';
+  const col=overall==='PASS'?'var(--em)':overall==='INCOMPLETE'?'var(--amber)':'var(--red)';
+  const bg=overall==='PASS'?'rgba(11,168,122,.06)':overall==='INCOMPLETE'?'rgba(212,134,10,.06)':'rgba(214,59,59,.06)';
+
+  document.getElementById('mock-results-subtitle').textContent=
+    overall==='PASS'?'All stations complete. Zero serious errors. Well done.':
+    overall==='INCOMPLETE'?'Some stations not completed.':
+    serious>0?'One or more serious safety errors recorded — automatic fail.':
+    'One or more stations failed.';
+
+  document.getElementById('mock-verdict').style.cssText=`margin-bottom:16px;padding:18px;border-radius:16px;border:2px solid ${col};background:${bg};`;
+  document.getElementById('mock-verdict').innerHTML=`
+    <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:${col};">${overall==='PASS'?'✓ PASS 🎉':overall==='INCOMPLETE'?'⚠ INCOMPLETE':'✗ FAIL'}</div>
+    <div style="margin-top:8px;display:flex;gap:16px;flex-wrap:wrap;font-size:13px;">
+      <span><b style="color:var(--em);">${pass}</b> Pass</span>
+      <span><b style="color:var(--amber);">${borderline}</b> Borderline</span>
+      <span><b style="color:var(--red);">${fail}</b> Fail</span>
+      <span><b style="color:var(--muted);">${notdone}</b> Not done</span>
+      <span><b style="color:var(--red);">${serious}</b> Serious error${serious===1?'':'s'}</span>
+    </div>
+    ${serious>0?'<div style="margin-top:10px;font-size:12px;color:var(--red);">⚠ Serious safety errors cause automatic fail regardless of other results.</div>':''}`;
+
+  // Station by station table
+  document.getElementById('mock-results-table').innerHTML=`
+    <table><thead><tr><th>#</th><th>Type</th><th>Topic</th><th>Time</th><th>Result</th><th>Error</th><th>Notes</th></tr></thead>
+    <tbody>${mockStations.map((s,i)=>{
+      const r=mockResults[i];
+      const rcol=r.result==='pass'?'pill-em':r.result==='borderline'?'pill-amber':r.result==='fail'?'pill-red':'pill-muted';
+      const ecol=r.error==='yes'?'pill-red':'pill-em';
+      return `<tr>
+        <td class="mono">${s.n}</td>
+        <td>${s.type}</td>
+        <td><b>${s.topic}</b></td>
+        <td class="mono">${s.mins}m</td>
+        <td><span class="pill ${rcol}">${r.result}</span></td>
+        <td><span class="pill ${ecol}">${r.error==='yes'?'✗ Error':'✓ None'}</span></td>
+        <td style="font-size:11px;color:var(--muted);">${r.note||'—'}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+
+  // Next steps based on results
+  const failedStations=mockStations.filter((_,i)=>mockResults[i].result==='fail'||mockResults[i].result==='notdone');
+  const errorStations=mockStations.filter((_,i)=>mockResults[i].error==='yes');
+  const steps=[];
+  if(errorStations.length>0) steps.push({col:'var(--red)',text:'Serious safety errors in: '+errorStations.map(s=>s.type+' ('+s.topic+')').join(', ')+'. Practise these stations until errors never occur.'});
+  if(failedStations.length>0) steps.push({col:'var(--amber)',text:'Failed stations: '+failedStations.map(s=>s.type+' ('+s.topic+')').join(', ')+'. Go to Coaching Session and run these individually.'});
+  if(borderline>0) steps.push({col:'var(--amber)',text:borderline+' borderline station(s). Review expected answers in Coaching Session debrief.'});
+  if(overall==='PASS') steps.push({col:'var(--em)',text:'Great result. Run one more mock in 2–3 days to confirm consistency. Log any notes from today in the Mistake Log.'});
+  steps.push({col:'var(--blue)',text:'Log all mistakes and missed steps in the Mistake Log while they are fresh in your memory.'});
+
+  document.getElementById('mock-next-steps').innerHTML=steps.map(s=>`
+    <div style="padding:9px 12px;border-radius:9px;border-left:3px solid ${s.col};background:rgba(0,0,0,.03);font-size:12px;line-height:1.5;">${s.text}</div>`).join('');
+
+  // Save to state
+  state.attempts.push({
+    date:new Date().toLocaleString(),
+    type:'full-mock',
+    scenario:mockScenario?.name||'',
+    pass,borderline,fail,serious,
+    overall
+  });
+  save();
+}
+
+// ── SKILLS ────────────────────────────────────────────────
+// Rich skill data: each skill has coached steps, instant-fail triggers, phrases, mistakes, examiner notes
+const skillDetail = {
+'Wound assessment + ANTT dressing': {
+  coached:[
+    {step:'Set up your clean field BEFORE touching the patient',note:'Wipe the trolley/surface with 70% alcohol wipe. Open ANTT pack without contaminating the inner sterile field. Arrange equipment — never reach across the sterile field.',say:'I am setting up my clean area using an aseptic non-touch technique.'},
+    {step:'Hand hygiene + PPE',note:'6-step WHO technique. Non-sterile gloves + apron. Eye protection if splash risk.',say:'I am performing hand hygiene before patient contact.'},
+    {step:'ID, explain, consent, privacy',note:'Full name + DOB. Explain what you will do and why. Draw curtains. Offer a cover for dignity.',say:'Can I confirm your full name and date of birth? I am going to assess your wound and change your dressing. Is that okay with you?'},
+    {step:'Expose wound — assess systematically',note:'Size (measure if needed). Edges (well-defined/macerated). Bed (pink/granulating/sloughy/necrotic). Exudate colour, amount, odour. Surrounding skin (erythema, warmth, oedema). Pain score.',say:'I am assessing the wound using the SEWING criteria for infection signs.'},
+    {step:'ANTT dressing technique — KEY PART',note:'Never touch the key site (wound surface) with anything non-sterile. Use forceps or sterile gloved hands. If you contaminate the sterile field — STOP and start again with fresh equipment.',say:'I am maintaining my aseptic field throughout this procedure.'},
+    {step:'Dispose and document',note:'Clinical waste bin. Remove PPE in correct order (gloves first, then apron). Hand hygiene. Document: wound appearance, dressing used, patient tolerance, any concerns.',say:'I will document this wound assessment including any signs of infection.'},
+    {step:'Escalate if needed',note:'SEWING positive (swelling, erythema, warmth, increasing exudate, new odour, general deterioration) = escalate to nurse/doctor immediately.',say:'I am concerned about [finding] and will escalate this to the senior nurse now using SBAR.'}
+  ],
+  instantFail:['Contaminating the key site (wound surface) with non-sterile item','Not performing hand hygiene before opening sterile field','Failure to use PPE appropriately','Proceeding without patient consent','Not escalating signs of infection'],
+  phrases:['"I am maintaining my aseptic non-touch technique throughout."','"Can I confirm your full name and date of birth before I begin?"','"I can see signs of [erythema/exudate/odour] which I will escalate to the nurse in charge."','"I will document this wound assessment now."'],
+  mistakes:['Touching the wound with non-sterile gloves (contamination = instant fail)','Not assessing all wound characteristics — just changing dressing without proper assessment','Forgetting to check/ask about allergies (latex, dressing materials)','Not documenting time, appearance, and dressing applied','Disposing of sharps incorrectly if scissors used'],
+  examiner:['Correct setup sequence — sterile field before patient contact','Systematic wound assessment — not just quick glance','ANTT maintained throughout — no contamination','Communication with patient throughout','Documentation intent stated clearly']
+},
+'IM injection': {
+  coached:[
+    {step:'5 Rights + 2 check against prescription chart',note:'Right patient, drug, dose, route, time. Plus: right documentation, right to refuse. Check expiry date on vial/ampoule. Check for precipitation or discolouration.',say:'I am checking the medication against the prescription chart — right patient, drug, dose, route, time, and expiry.'},
+    {step:'Confirm patient ID and allergy status',note:'Full name + DOB. Check allergy wristband. Check drug chart allergy section. Ask patient verbally.',say:'Can I confirm your name and date of birth? And do you have any allergies I should know about?'},
+    {step:'Explain procedure, gain consent',note:'What it is, why, what to expect (slight sting/pressure). Ask if they are ready.',say:'I am going to give you an injection into your [deltoid/thigh] muscle. You may feel a brief sting. Is that okay?'},
+    {step:'Select site, prepare skin',note:'Deltoid (upper arm — small volumes ≤1mL) or vastus lateralis (thigh — larger volumes). No alcohol swab needed routinely (NMC/NICE guidance) unless immunocompromised. Position patient comfortably.',say:'I am selecting the [deltoid] muscle as the injection site.'},
+    {step:'Administer injection',note:'Bunch muscle slightly or stretch skin taut (deltoid: stretch). 90° angle. Smooth, steady injection. UK practice 2024: aspiration NOT required for IM. Do NOT massage after — can cause tissue damage.',say:'I am administering the injection now. You may feel some pressure.'},
+    {step:'Sharps safety — IMMEDIATE disposal',note:'Uncap needle just before use. Dispose into sharps bin IMMEDIATELY after removing from patient. NEVER resheath. Never leave on tray.',say:'I am disposing of the sharp directly into the sharps bin.'},
+    {step:'Document and observe',note:'Sign prescription chart immediately. Note time, site, batch number if required, patient response. Observe for allergic reaction for appropriate time.',say:'I will document the administration now and observe for any adverse reaction.'}
+  ],
+  instantFail:['Resheathing the needle after use','Not checking 5 Rights + 2 against prescription','Missing allergy check','Signing medication chart before administering','Administering wrong dose, wrong drug, or to wrong patient'],
+  phrases:['"I am checking right patient, right drug, right dose, right route, right time, and expiry."','"Do you have any allergies to medications or latex?"','"I am disposing of the sharp directly into the sharps bin immediately."','"I will document this administration now and observe for any reaction."'],
+  mistakes:['Recapping needle after use — instant fail','Not checking allergy wristband AND asking patient verbally','Signing before giving','Massaging injection site afterwards','Forgetting to observe patient post-injection'],
+  examiner:['5 Rights + 2 verbalised against chart before drawing up','Allergy check — wristband AND verbal','Needle NEVER recapped','Sharps bin used immediately and correctly','Chart signed only after administration']
+},
+'SC injection': {
+  coached:[
+    {step:'5 Rights + 2 check — same as IM',note:'Especially important for insulin — units are units, never convert to mg.',say:'I am checking the prescription — confirming right patient, drug, dose, route, time, and expiry.'},
+    {step:'ID, allergy, consent, explain',note:'SC more comfortable than IM — reassure patient.',say:'I am going to give you a small injection under the skin. It is a smaller needle and should be more comfortable than an IM injection.'},
+    {step:'Site selection and rotation',note:'Abdomen (2 inches from navel), thigh, upper arm (outer), buttock. Rotate sites to prevent lipodystrophy — especially for insulin.',say:'I am selecting the [abdomen] as the injection site and checking the rotation chart.'},
+    {step:'Technique — pinch fold, correct angle',note:'Pinch subcutaneous tissue with thumb and forefinger. 45° angle for thin patients or short needles; 90° for larger patients or longer needles. Do NOT aspirate for SC injection.',say:'I am using a skin fold technique at 45 degrees for this subcutaneous injection.'},
+    {step:'Immediate sharps disposal',note:'Same as IM — directly into sharps bin, never resheath.',say:'Disposing directly into the sharps bin now.'},
+    {step:'Document, observe, rotate chart',note:'Update rotation chart. Sign prescription. Observe for reaction — especially insulin: monitor BM 30–60 min post.',say:'I will document this injection and update the rotation chart.'}
+  ],
+  instantFail:['Resheathing needle','Missing allergy check','Wrong dose — especially critical for insulin','Aspirating before SC injection (incorrect technique)','Signing chart before administering'],
+  phrases:['"I am selecting a site based on the rotation chart."','"I will use a skin fold technique."','"For insulin doses, I always double-check with a second registered nurse per trust policy."'],
+  mistakes:['Forgetting to update rotation chart','Massaging site after — alters absorption rate','Not observing BM post-insulin','Converting insulin units — never do this','Wrong injection angle for patient body type'],
+  examiner:['Rotation chart checked and updated','Skin fold technique correctly demonstrated','No aspiration (correct SC practice)','Immediate sharps disposal','Observation plan stated']
+},
+'IV cannula flush + VIP score': {
+  coached:[
+    {step:'Inspect the cannula site FIRST — before touching',note:'Look without touching: redness, swelling, tracking, discharge, tenderness. Score VIP 0–5 before flushing.',say:'I am inspecting the cannula site to calculate the VIP score before touching it.'},
+    {step:'Calculate and document VIP score',note:'0=no signs. 1=slight pain/redness (observe hourly). 2=pain, redness, swelling (remove and re-site). 3=hard venous cord (remove, re-site, consider antibiotics). 4=extensive phlebitis (urgent review). 5=advanced thrombophlebitis (remove immediately, escalate).',say:'The VIP score is [X]. Based on this, I will [action — continue/remove/escalate].'},
+    {step:'Hand hygiene + PPE + ANTT for flush',note:'Prepare flush using ANTT. Clean cap of needleless connector with 70% alcohol for 15 seconds, allow to dry.',say:'I am preparing the flush using aseptic non-touch technique.'},
+    {step:'Check patency before flushing',note:'Flush slowly — feel for resistance. NO resistance = patent. Any resistance, swelling, or pain = STOP. Do not force.',say:'I am checking the cannula is patent by flushing slowly. I am feeling for resistance.'},
+    {step:'Flush and observe throughout',note:'Flush at prescribed rate. Observe site throughout — any swelling = extravasation = STOP immediately.',say:'I am flushing slowly while observing the site for any signs of extravasation.'},
+    {step:'Document: VIP score, flush, time, patient response',note:'Any score ≥2 must be documented with action taken. If removed, document removal site and new site.',say:'I will document the VIP score, flush administered, time, and that the site was observed throughout.'}
+  ],
+  instantFail:['Flushing with force against resistance','Not performing ANTT for flush preparation','Contaminating the needleless connector','Continuing to flush when extravasation signs present','Not documenting VIP score'],
+  phrases:['"The VIP score is [X], indicating [finding]. I will [action]."','"I am checking patency — there is no resistance so I will proceed."','"I can see swelling at the site — I am stopping the flush and removing the cannula."'],
+  mistakes:['Scoring VIP before inspecting (should inspect before touching/scoring simultaneously)','Forgetting to allow alcohol swab to dry before connecting','Not recapping with ANTT after flush','Flushing too fast — can cause discomfort or phlebitis','Forgetting to document VIP score'],
+  examiner:['VIP assessment stated and scored before flush','ANTT maintained for preparation','Patency checked — not forced','Site observed throughout flush','Documentation intention stated clearly']
+},
+'Blood glucose monitoring': {
+  coached:[
+    {step:'Confirm patient identity and indication',note:'Full name + DOB. Why is BM being checked? Diabetic monitoring, hypoglycaemia symptoms, clinical concern?',say:'Can I confirm your full name and date of birth? I am going to check your blood glucose level.'},
+    {step:'Hand hygiene + gloves',note:'Your hands AND patient\'s hands if doing fingerprick — blood is a biohazard. Warm the finger first (shake hand or warm water) to improve blood flow.',say:'I am performing hand hygiene and putting on gloves. I will warm your finger to help get a good sample.'},
+    {step:'Check equipment — strip expiry + calibration',note:'Check strip expiry date. Check meter has been quality controlled (QC) per trust policy — usually daily. If QC not done, do not use meter.',say:'I am checking the strip expiry date and confirming quality control has been performed today.'},
+    {step:'Fingerprick — side of fingertip',note:'Lateral aspect of fingertip — not the pad (more painful, worse healing). Change finger each time. Apply lancet firmly and remove. Let blood form naturally — do not squeeze excessively (affects result).',say:'I am using the side of your fingertip for the sample. You will feel a small prick.'},
+    {step:'Apply blood, read result, dispose sharps',note:'Apply blood to strip immediately. Read result at correct time (check device — usually 5–8 seconds). Dispose lancet into sharps bin immediately.',say:'I am reading the result now — the blood glucose is [X] mmol/L.'},
+    {step:'Interpret and act',note:'Normal: 4–10 mmol/L (fasting 4–7). Hypo: <4 mmol/L — treat immediately (15–20g glucose if conscious). Hyper: >11 mmol/L — escalate to nurse/doctor. Document result and action.',say:'The result is [X] mmol/L. [Based on this, I will/I am concerned because...] I will document this result now.'}
+  ],
+  instantFail:['Unsafe sharps handling — not disposing lancet into sharps bin immediately','Missing patient ID check','Not checking strip expiry or QC','Failing to act on a hypoglycaemic result (<4 mmol/L)'],
+  phrases:['"The blood glucose is [X] mmol/L."','"This is below 4 mmol/L — this patient is hypoglycaemic. I will treat this immediately."','"This is above 11 mmol/L — I will escalate this to the nurse in charge now."','"I am disposing of the lancet directly into the sharps bin."'],
+  mistakes:['Squeezing finger too hard — dilutes sample with tissue fluid','Not allowing blood to form naturally','Reading result at wrong time','Forgetting to document result in BGM chart','Not having a clear action plan for abnormal result'],
+  examiner:['Strip expiry and QC check verbalised','Lateral fingertip technique','Sharps bin used immediately','Result interpreted — not just stated but acted upon','Documentation stated']
+},
+'Oxygen therapy': {
+  coached:[
+    {step:'Check oxygen is PRESCRIBED — target saturation',note:'Oxygen must be prescribed in UK (except emergency). Check drug chart for target saturation. Most adults: 94–98%. COPD/type 2 respiratory failure: 88–92% (to avoid hypercapnic drive suppression).',say:'I am checking the oxygen prescription — the target saturation is [X]%.'},
+    {step:'Assess current clinical status',note:'Current SpO₂, RR, work of breathing, mental state. Compare to target range. Is oxygen actually needed right now?',say:'The current SpO₂ is [X]% on air. This is [below/within] the target range of [X–X]%.'},
+    {step:'Select correct delivery device',note:'Nasal cannula: 1–4L/min (24–36%). Simple face mask: 5–10L/min (35–60%). Non-rebreathe mask: 10–15L/min (≥60%) — for acute hypoxia. Venturi mask: precise FiO₂ — for COPD/type 2 RF.',say:'I am using a [device] at [X] litres per minute to achieve the target saturation.'},
+    {step:'Explain, consent, apply correctly',note:'Check comfort — mask not too tight. Check for skin integrity under mask (pressure damage risk with prolonged use). Check nasal cannula position.',say:'I am going to put this oxygen mask on you now. Please let me know if it feels uncomfortable.'},
+    {step:'Monitor response and document',note:'Recheck SpO₂ after 5 minutes. Is it now within target range? If not improving — escalate. Document: device, flow rate, SpO₂ before and after, patient tolerance.',say:'I will recheck the SpO₂ in 5 minutes and document the device and flow rate used.'},
+    {step:'Escalate if not responding',note:'SpO₂ not improving or deteriorating despite oxygen = escalate IMMEDIATELY using SBAR.',say:'The SpO₂ is not improving as expected. I am escalating this now using SBAR.'}
+  ],
+  instantFail:['Starting oxygen without checking prescription (except emergency)','Wrong device for the clinical situation','Not monitoring after starting — leaving patient unobserved','Not escalating if SpO₂ not responding','Applying non-rebreathe mask to a COPD patient without medical authorisation for high-flow O₂'],
+  phrases:['"I am checking the oxygen is prescribed and confirming the target saturation."','"I am using a [Venturi/simple/NRB] mask because [clinical reason]."','"The SpO₂ has improved from [X] to [X]% — this is within the target range."','"The SpO₂ is not responding — I am escalating this now."'],
+  mistakes:['Using NRB mask on COPD patient without checking target (could suppress hypoxic drive)','Forgetting to recheck SpO₂ after starting','Not documenting flow rate and device','Applying mask incorrectly — gap at nose, no metal strip moulded','Stopping oxygen without medical review'],
+  examiner:['Prescription and target saturation checked first','Correct device selected with justification','SpO₂ before and after documented','Response monitored — not just applied and left','Escalation triggered if not improving']
+},
+'Nutritional assessment (MUST)': {
+  coached:[
+    {step:'Weigh patient and measure height for BMI',note:'Actual weight if possible. If unable to weigh: use arm span for height estimate, mid-upper arm circumference as proxy BMI. BMI <18.5 = score 2. BMI 18.5–20 = score 1. BMI >20 = score 0.',say:'I am calculating the BMI as the first step of the MUST score.'},
+    {step:'Assess recent unplanned weight loss',note:'Ask patient and/or check notes. >10% in 3–6 months = score 2. 5–10% = score 1. <5% = score 0. Unplanned weight loss is a key red flag.',say:'I am asking about any unplanned weight loss in the last 3–6 months.'},
+    {step:'Assess acute disease effect',note:'If patient is acutely ill AND has had no nutritional intake, or is likely to have none, for >5 days = score 2. This applies to many acute admissions.',say:'Given this is an acute admission and the patient has had minimal oral intake, I am scoring 2 for acute disease effect.'},
+    {step:'Calculate total MUST score and act',note:'Add all three scores. 0 = low risk (routine). 1 = medium risk (observe, 3-day food diary). ≥2 = HIGH risk — refer to dietitian urgently, commence nutritional support, document.',say:'The total MUST score is [X], indicating [low/medium/high] nutritional risk. The appropriate action is [action].'},
+    {step:'Swallowing assessment',note:'Any concerns about swallowing = SALT (Speech and Language Therapy) referral urgently. Dysphagia + poor nutrition = aspiration risk. Never give oral nutrition if swallowing is unsafe.',say:'I am also assessing for any swallowing difficulties that would require a SALT referral.'},
+    {step:'Document and escalate',note:'Document MUST score, components, action taken, referral if made. Review weekly for high-risk patients.',say:'I will document the MUST score and refer to the dietitian given the high-risk result.'}
+  ],
+  instantFail:['Failing to act on a high MUST score (≥2) — must refer to dietitian','Not recognising dysphagia as a swallowing/aspiration risk','Giving oral nutrition to a patient with unsafe swallow'],
+  phrases:['"The MUST score is [X], indicating [level] nutritional risk."','"Given the high MUST score, I will refer this patient to the dietitian urgently."','"I am concerned about a possible swallowing difficulty and will refer to SALT."'],
+  mistakes:['Using old weight rather than current measured weight','Forgetting the acute disease component (often missed)','Not linking MUST score to an action plan','Not checking for swallowing safety before recommending oral intake','Documenting score without documenting action'],
+  examiner:['All three MUST components scored individually','Total correctly calculated','Appropriate action for score level stated','Swallowing assessment considered','Dietitian referral triggered if score ≥2']
+},
+'NG tube safety check': {
+  coached:[
+    {step:'NEVER feed without confirming position',note:'This is the most critical safety principle in NG tube care. Even if tube was confirmed yesterday, check position before EVERY feed and drug administration.',say:'Before administering anything via this NG tube, I must confirm its position is correct.'},
+    {step:'Aspirate gastric contents',note:'Use a 50mL enteral syringe. Draw back slowly. Aim to obtain at least 0.5mL of aspirate. If no aspirate — change patient position (onto left side), inject 10–20mL air and try again. Still nothing = stop, escalate.',say:'I am aspirating gastric contents to confirm tube position.'},
+    {step:'pH test — CE marked strips ONLY',note:'Apply aspirate to CE-marked pH strip. NEVER use blue litmus paper. pH ≤5.5 = gastric = safe to feed. pH 5.5–6 = borderline = DO NOT FEED = escalate for CXR. pH >6 = not gastric = NEVER feed = escalate.',say:'I am testing the pH using CE-marked pH strips. The result is [X].'},
+    {step:'Act on pH result',note:'≤5.5: safe. Proceed. Document pH, time, who checked. 5.5–6.0: stop, escalate, arrange X-ray confirmation. >6.0 or no aspirate: stop, escalate. Document all actions.',say:'The pH is [X], which means [safe to proceed/I must stop and escalate].'},
+    {step:'NEVER use air auscultation',note:'"Whoosh test" (air auscultation) is NOT safe and must never be used in UK practice — it cannot reliably distinguish gastric from respiratory placement. If you do this in the OSCE you will fail.',say:'I will not use the air auscultation method as this is not safe UK practice.'},
+    {step:'Document: pH, time, action, person checking',note:'Every check must be documented. This creates a safe record.',say:'I will document the pH result, the time of the check, and my action.'}
+  ],
+  instantFail:['Feeding via NG tube without pH check','Using blue litmus paper or air auscultation instead of CE-marked pH strips','Feeding when pH is 5.5–6 (borderline) or above','Not escalating when aspirate cannot be obtained'],
+  phrases:['"I must confirm NG tube position before administering anything."','"The pH is [X] which is [safe/borderline/unsafe]. I will [proceed/stop and escalate]."','"I will not use the whoosh test — this is not safe UK practice."'],
+  mistakes:['Using blue litmus paper — not CE marked, incorrect practice','Forgetting to check even if tube was confirmed earlier in the shift','Not documenting the pH reading','Proceeding with borderline pH instead of escalating','Not being aware that certain medications (PPI) can raise gastric pH above 5.5'],
+  examiner:['States will check before every use — not just once','CE-marked pH strips specifically mentioned','Correct interpretation of all pH results','Air auscultation not used — and explicitly stated why','Documentation of each check intended']
+},
+'Pressure area assessment (Braden)': {
+  coached:[
+    {step:'Inspect all high-risk bony prominences WITH DIGNITY',note:'Sacrum, heels (most common), greater trochanters, medial knee, lateral malleolus, occiput (head of bed patients), elbows. Ask patient to roll/turn or do so with assistance. Expose only what is needed.',say:'With your permission, I am going to inspect your pressure areas. I will maintain your privacy throughout.'},
+    {step:'Score each Braden domain',note:'Sensory perception (1–4). Moisture (1–4). Activity (1–4). Mobility (1–4). Nutrition (1–4). Friction and shear (1–3). Maximum score 23. LOWER score = HIGHER risk.',say:'I am using the Braden scale to assess pressure area risk.'},
+    {step:'Calculate total and classify risk',note:'Score 15–18 = mild risk. Score 13–14 = moderate risk. Score ≤12 = high risk. Score ≤9 = very high risk. Any existing damage immediately bumps to higher priority.',say:'The total Braden score is [X], indicating [level] risk.'},
+    {step:'Grade any existing damage',note:'Grade 1: non-blanching erythema (skin intact). Grade 2: partial thickness skin loss. Grade 3: full thickness skin loss (no exposed bone). Grade 4: full thickness + exposed bone/tendon/muscle. Unstageable/deep tissue injury.',say:'I can see [description]. This appears to be a Grade [X] pressure injury.'},
+    {step:'Plan care',note:'≥2 hourly repositioning minimum. Pressure redistributing mattress/cushion if score ≤16. Heel offloading devices. Skin care — moisture barrier cream. Nutrition review. Document everything.',say:'Based on this assessment, I will [care plan actions] and ensure 2-hourly repositioning is maintained.'},
+    {step:'Escalate and document',note:'Any new Grade 2+ = duty of candour, report to nurse in charge, Datix incident form, photograph with consent, medical review if needed. Document full assessment with Braden score and care plan.',say:'I will document the full assessment, Braden score, and escalate the Grade [X] finding to the nurse in charge.'}
+  ],
+  instantFail:['Not actually inspecting bony prominences — just asking the patient','Failing to escalate new Grade 2+ pressure damage','Not documenting assessment findings'],
+  phrases:['"I am using the Braden scale to assess all six domains of pressure ulcer risk."','"The total score is [X], which means [low/moderate/high] risk."','"I can see a Grade 2 pressure injury at the sacrum — I will escalate this to the nurse in charge and complete a Datix."'],
+  mistakes:['Scoring mobility and activity as the same thing (they are different domains)','Not repositioning patient after assessment — assessment should trigger care','Forgetting friction/shear domain','Not grading existing damage','Inspecting only sacrum and heels — missing trochanters, occiput, heels'],
+  examiner:['All 6 bony prominences inspected','All 6 Braden domains scored','Total calculated and risk level stated','Existing damage graded correctly','Care plan actions linked to the score']
+}
+};
+
+// Skill groups for organised list view
+const skillGroups = [
+  {label:'💊 Medication Safety', color:'var(--red)', skills:['IM injection','SC injection','Inhaled medication','Suppository administration']},
+  {label:'🧤 Infection Control & ANTT', color:'var(--em)', skills:['Wound assessment + ANTT dressing','IV cannula flush + VIP score','Catheter specimen of urine (CSU)','NG tube safety check']},
+  {label:'📊 Patient Assessment', color:'var(--blue)', skills:['Blood glucose monitoring','Pain assessment','Nutritional assessment (MUST)','Pressure area assessment (Braden)','Bowel assessment','Oral care assessment']},
+  {label:'🫁 Respiratory & Monitoring', color:'var(--amber)', skills:['Oxygen therapy','Peak expiratory flow rate','Fluid balance chart','MSU + urinalysis']},
+  {label:'🏥 Clinical Procedures', color:'var(--purple)', skills:['Anti-embolism stockings (TED)','Urinary catheter removal','Pre-operative check']}
+];
+
+let currentSkillName = null;
+let sdTimerSecs=0, sdTimerOrig=0, sdTimerInt=null;
+
+function renderSkillsList(){
+  const q=(document.getElementById('skillSearch')?.value||'').toLowerCase();
+  const grouped=document.getElementById('skillsGrouped');
+  if(!grouped)return;
+  grouped.innerHTML = skillGroups.map(group=>{
+    const groupSkills = skills.filter(s=>{
+      const inGroup = group.skills.includes(s.name);
+      const matchesFilter = skillsFilter==='all'||s.risk===skillsFilter;
+      const matchesSearch = !q||s.name.toLowerCase().includes(q)||s.tags.join(' ').includes(q);
+      return inGroup && matchesFilter && matchesSearch;
+    });
+    if(!groupSkills.length) return '';
+    return `<div style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid ${group.color}22;">
+        <span style="font-family:'Fraunces',serif;font-size:16px;font-weight:800;color:${group.color};">${group.label}</span>
+        <span class="pill pill-muted">${groupSkills.filter(s=>state.skillDone[s.name]==='safe').length}/${groupSkills.length} safe</span>
+      </div>
+      <div style="display:grid;gap:6px;">
+        ${groupSkills.map(s=>{
+          const safe=state.skillDone[s.name]==='safe';
+          const attempts=state.skillAttempts?.[s.name]||[];
+          const lastAttempt=attempts[attempts.length-1];
+          const cleanStreak=getCleanStreak(s.name);
+          const hasDetail=!!skillDetail[s.name];
+          return `<div onclick="${hasDetail?`openSkillDetail('${s.name.replace(/'/g,'\\\'')}')`:'null'}" 
+            style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:12px 14px;background:${safe?'rgba(11,168,122,.06)':'var(--surface)'};border:1px solid ${safe?'rgba(11,168,122,.3)':'var(--border)'};border-radius:12px;cursor:${hasDetail?'pointer':'default'};transition:.12s;"
+            ${hasDetail?`onmouseover="this.style.borderColor='${group.color}'" onmouseout="this.style.borderColor='${safe?'rgba(11,168,122,.3)':'var(--border)'}'"`:''}>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+                <span style="font-weight:700;font-size:13px;">${s.name}</span>
+                ${safe?'<span class="pill pill-em" style="font-size:10px;">✓ Safe</span>':''}
+                <span class="pill ${s.risk==='High'?'pill-red':s.risk==='Medium'?'pill-amber':'pill-em'}" style="font-size:10px;">${s.risk} risk</span>
+                <span class="pill pill-muted" style="font-size:10px;">${s.mins} min</span>
+              </div>
+              <div style="font-size:11px;color:var(--muted);">
+                ${attempts.length?`${attempts.length} attempt${attempts.length!==1?'s':''} · clean streak: <b style="color:${cleanStreak>=3?'var(--em)':'var(--ink)'};">${cleanStreak}</b>/3 needed`:'No attempts yet — click to open coaching sheet'}
+                ${lastAttempt?` · last: <b style="color:${lastAttempt.type==='clean'?'var(--em)':'var(--red)'};">${lastAttempt.type==='clean'?'✓ clean':'✗ had errors'}</b> (${lastAttempt.date})`:''}
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              ${cleanStreak>=3&&!safe?`<button class="btn btn-em" style="font-size:11px;white-space:nowrap;" onclick="event.stopPropagation();quickMarkSafe('${s.name.replace(/'/g,'\\\'')}')" >✓ Mark safe</button>`:''}
+              ${hasDetail?`<span style="color:var(--faint);font-size:16px;">›</span>`:''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function getCleanStreak(skillName){
+  const attempts=(state.skillAttempts||{})[skillName]||[];
+  let streak=0;
+  for(let i=attempts.length-1;i>=0;i--){
+    if(attempts[i].type==='clean')streak++;
+    else break;
+  }
+  return streak;
+}
+
+function quickMarkSafe(name){
+  if(!state.skillDone)state.skillDone={};
+  state.skillDone[name]='safe';
+  save();renderSkillsList();
+}
+
+function openSkillDetail(name){
+  currentSkillName=name;
+  const sk=skills.find(s=>s.name===name);
+  const detail=skillDetail[name];
+  if(!sk)return;
+  document.getElementById('skills-list-view').style.display='none';
+  document.getElementById('skills-detail-view').style.display='block';
+  document.getElementById('sd-title').textContent=sk.name;
+  const safe=state.skillDone[sk.name]==='safe';
+  const cleanStreak=getCleanStreak(sk.name);
+  document.getElementById('sd-meta').textContent=`${sk.risk} risk · ${sk.mins} min · Clean streak: ${cleanStreak}/3 · ${safe?'✓ Marked safe':'Not yet marked safe'}`;
+  document.getElementById('sd-mark-safe-btn').textContent=safe?'↺ Mark for practice':'✓ Mark as safe';
+  document.getElementById('sd-mark-safe-btn').className='btn '+(safe?'btn-ghost':'btn-em');
+  // Set timer
+  sdTimerSecs=sk.mins*60; sdTimerOrig=sk.mins*60;
+  document.getElementById('sd-timer-label').textContent=sk.name+' · '+sk.mins+' min';
+  document.getElementById('sd-timer-display').textContent=String(Math.floor(sk.mins)).padStart(2,'0')+':00';
+  document.getElementById('sd-timer-bar').style.width='100%';
+  // Coached steps
+  if(detail?.coached){
+    document.getElementById('sd-steps-coached').innerHTML=detail.coached.map((c,i)=>`
+      <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+        <div style="padding:10px 12px;background:var(--surface2);display:flex;gap:10px;align-items:flex-start;">
+          <span style="background:var(--em);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px;">${i+1}</span>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:3px;">${c.step}</div>
+            <div style="font-size:11px;color:var(--muted);line-height:1.5;">${c.note}</div>
+          </div>
+        </div>
+        <div style="padding:8px 12px;background:rgba(11,168,122,.04);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <span style="font-size:10px;font-weight:700;color:var(--em);text-transform:uppercase;letter-spacing:1px;flex-shrink:0;">Say:</span>
+          <span style="font-size:12px;color:var(--ink);font-style:italic;">${c.say}</span>
+        </div>
+      </div>`).join('');
+  } else {
+    document.getElementById('sd-steps-coached').innerHTML=sk.must.map((m,i)=>`
+      <div style="padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;font-size:12px;display:flex;gap:8px;">
+        <span style="color:var(--em);font-weight:800;font-family:'JetBrains Mono',monospace;font-size:10px;flex-shrink:0;margin-top:2px;">${String(i+1).padStart(2,'0')}</span>
+        <span>${m}</span>
+      </div>`).join('');
+  }
+  // Info panels
+  const makeList=(arr,col)=>arr.map(x=>`<div style="padding:7px 10px;background:rgba(0,0,0,.03);border-radius:7px;font-size:12px;line-height:1.5;border-left:2px solid ${col};">${x}</div>`).join('');
+  if(detail){
+    document.getElementById('sd-instant-fail').innerHTML=makeList(detail.instantFail,'var(--red)');
+    document.getElementById('sd-phrases').innerHTML=detail.phrases.map(p=>`<div style="padding:7px 10px;background:rgba(11,168,122,.06);border-radius:7px;font-size:12px;font-style:italic;border-left:2px solid var(--em);">${p}</div>`).join('');
+    document.getElementById('sd-mistakes').innerHTML=makeList(detail.mistakes,'var(--amber)');
+    document.getElementById('sd-examiner').innerHTML=makeList(detail.examiner,'var(--blue)');
+  } else {
+    const na='<div class="small muted" style="padding:8px;">Detailed coaching sheet coming soon. Use the checklist steps above.</div>';
+    ['sd-instant-fail','sd-phrases','sd-mistakes','sd-examiner'].forEach(id=>document.getElementById(id).innerHTML=na);
+  }
+  renderAttemptLog();
+}
+
+function closeSkillDetail(){
+  document.getElementById('skills-list-view').style.display='block';
+  document.getElementById('skills-detail-view').style.display='none';
+  sdTimerPause();
+  renderSkillsList();
+}
+
+function toggleSkillSafe(){
+  if(!currentSkillName)return;
+  const safe=state.skillDone[currentSkillName]==='safe';
+  state.skillDone[currentSkillName]=safe?'practice':'safe';
+  save();
+  openSkillDetail(currentSkillName);
+}
+
+function logAttempt(type){
+  if(!currentSkillName)return;
+  if(!state.skillAttempts)state.skillAttempts={};
+  if(!state.skillAttempts[currentSkillName])state.skillAttempts[currentSkillName]=[];
+  const now=new Date();
+  state.skillAttempts[currentSkillName].push({
+    type,
+    date:now.toLocaleDateString('en-GB',{day:'numeric',month:'short'}),
+    time:now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+  });
+  // Auto-mark safe after 3 consecutive clean attempts
+  const streak=getCleanStreak(currentSkillName);
+  if(streak>=3 && state.skillDone[currentSkillName]!=='safe'){
+    state.skillDone[currentSkillName]='safe';
+    setTimeout(()=>alert('🎉 3 consecutive clean attempts — '+currentSkillName+' auto-marked as safe!'),100);
+  }
+  save();
+  renderAttemptLog();
+  openSkillDetail(currentSkillName);
+}
+
+function renderAttemptLog(){
+  const el=document.getElementById('sd-attempts-log');if(!el)return;
+  const attempts=(state.skillAttempts||{})[currentSkillName]||[];
+  const streak=getCleanStreak(currentSkillName);
+  if(!attempts.length){el.textContent='No attempts logged yet. Run the full skill and log your result.';return;}
+  const recent=attempts.slice(-6).reverse();
+  el.innerHTML=`<div style="margin-bottom:8px;"><b>Clean streak: </b><span style="color:${streak>=3?'var(--em)':'var(--ink)'};">${streak}/3</span>${streak>=3?' ✓ Enough to mark safe':' — need '+Math.max(0,3-streak)+' more clean run'+(3-streak!==1?'s':'')}</div>`+
+    recent.map(a=>`<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:7px;background:rgba(0,0,0,.03);margin-bottom:4px;">
+      <span style="color:${a.type==='clean'?'var(--em)':'var(--red)'};font-weight:700;">${a.type==='clean'?'✓':'✗'}</span>
+      <span>${a.type==='clean'?'Clean attempt':'Had errors'}</span>
+      <span class="tiny muted" style="margin-left:auto;">${a.date} ${a.time}</span>
+    </div>`).join('')+
+    (attempts.length>6?`<div class="tiny muted" style="margin-top:4px;">+${attempts.length-6} earlier attempts</div>`:'');
+}
+
+function logSkillMistake(){
+  if(!currentSkillName)return;
+  switchSection('track');switchTab('mistakes','track');
+  setTimeout(()=>{const el=document.getElementById('mStation');if(el)el.value=currentSkillName;},100);
+}
+
+function startSkillTimer(){
+  if(sdTimerInt)return;
+  sdTimerInt=setInterval(()=>{
+    if(sdTimerSecs>0){sdTimerSecs--;drawSDTimer();}
+    else{sdTimerPause();alert('⏰ Time is up for this skill!');}
+  },1000);
+  document.getElementById('sd-timer-btn').textContent='⏸ Pause';
+  document.getElementById('sd-timer-btn').onclick=()=>{sdTimerPause();document.getElementById('sd-timer-btn').textContent='▶ Resume';document.getElementById('sd-timer-btn').onclick=startSkillTimer;};
+}
+function sdTimerPause(){clearInterval(sdTimerInt);sdTimerInt=null;}
+function resetSkillTimer(){
+  sdTimerPause();
+  const sk=skills.find(s=>s.name===currentSkillName);
+  sdTimerSecs=sk?sk.mins*60:0; sdTimerOrig=sdTimerSecs;
+  drawSDTimer();
+  const btn=document.getElementById('sd-timer-btn');
+  if(btn){btn.textContent='⏱ Start timer';btn.onclick=startSkillTimer;}
+}
+function drawSDTimer(){
+  const m=String(Math.floor(sdTimerSecs/60)).padStart(2,'0'),s=String(sdTimerSecs%60).padStart(2,'0');
+  const d=document.getElementById('sd-timer-display');if(d)d.textContent=m+':'+s;
+  const pct=sdTimerOrig?sdTimerSecs/sdTimerOrig:1;
+  const bar=document.getElementById('sd-timer-bar');if(bar)bar.style.width=(pct*100)+'%';
+  const tb=document.getElementById('sd-timer-block');
+  if(tb){tb.classList.toggle('tw',pct<0.25&&pct>=0.1);tb.classList.toggle('td',pct<0.1&&pct>0);}
+}
+
+// Keep renderSkills as alias for backward compat (mock station uses it)
+function renderSkills(){renderSkillsList();}
+
+
+
+// ── NEWS2 ─────────────────────────────────────────────────
+let news2Sel={};
+function renderNEWS2(){
+  document.getElementById('news2Rows').innerHTML=news2Params.map((p,pi)=>`
+    <div class="n2-row"><div class="n2-param">${p.label}</div>
+    <div class="n2-btns">${p.opts.map((o,oi)=>`<button class="n2-btn ${news2Sel[pi]===oi?'s'+Math.min(o.s,3):''}" onclick="news2Sel[${pi}]=${oi};renderNEWS2()">${o.t}<small style="display:block;font-size:9px;">${o.s===0?'0':'+'+o.s}</small></button>`).join('')}</div></div>`).join('');
+  const total=news2Params.reduce((sum,p,pi)=>news2Sel[pi]!==undefined?sum+p.opts[news2Sel[pi]].s:sum,0);
+  const has=Object.keys(news2Sel).length>0;
+  const t=document.getElementById('news2Total');const l=document.getElementById('news2Level');
+  if(!has){t.textContent='—';l.style.background='rgba(0,0,0,.04)';l.style.color='var(--muted)';l.textContent='Score parameters above';return;}
+  t.textContent=total;
+  const s3=news2Params.some((p,pi)=>news2Sel[pi]!==undefined&&p.opts[news2Sel[pi]].s===3);
+  if(total>=7){t.style.color='var(--red)';l.style.background='var(--red-dim)';l.style.color='var(--red)';l.textContent=total+' — HIGH RISK · Emergency response now';}
+  else if(total>=5||s3){t.style.color='var(--amber)';l.style.background='var(--amber-dim)';l.style.color='var(--amber)';l.textContent=total+(s3&&total<5?' — single 3!':'')+' — MEDIUM RISK · Urgent review 1 hr';}
+  else if(total>=1){t.style.color='var(--em)';l.style.background='var(--em-dim)';l.style.color='var(--em)';l.textContent=total+' — LOW risk · Reassess 4–6 hourly';}
+  else{t.style.color='var(--em)';l.style.background='var(--em-dim)';l.style.color='var(--em)';l.textContent='0 — Normal';}
+}
+function resetNEWS2(){news2Sel={};renderNEWS2();}
+
+// ── DRUG CALC ─────────────────────────────────────────────
+let currentDQ=null;
+function newDrugQuestion(){currentDQ=drugQuestions[Math.floor(Math.random()*drugQuestions.length)];document.getElementById('dcQuestion').textContent=currentDQ.q;document.getElementById('dcUnit').textContent=currentDQ.unit;document.getElementById('dcAnswer').value='';document.getElementById('dcResult').innerHTML='';document.getElementById('dcAnswer').focus();}
+function checkDrugAnswer(){
+  if(!currentDQ)return;const ans=parseFloat(document.getElementById('dcAnswer').value);const res=document.getElementById('dcResult');
+  if(isNaN(ans)){res.innerHTML='<div class="notice">Enter a number.</div>';return;}
+  if(Math.abs(ans-currentDQ.a)<0.1){state.dc.c++;state.dc.streak++;res.innerHTML=`<div class="success">✓ Correct! ${currentDQ.w}</div>`;}
+  else{state.dc.w++;state.dc.streak=0;res.innerHTML=`<div class="danger-box">✗ Correct: <b>${currentDQ.a} ${currentDQ.unit}</b>. ${currentDQ.w}</div>`;}
+  save();renderDCScore();
+}
+function renderDCScore(){const{c,w,streak}=state.dc;document.getElementById('dcCorrect').textContent=c;document.getElementById('dcWrong').textContent=w;document.getElementById('dcPct').textContent=(c+w)>0?Math.round(c/(c+w)*100)+'%':'—';document.getElementById('dcStreak').textContent=streak;}
+
+// ── PV & EBP ─────────────────────────────────────────────
+let writtenMode='PV';
+function renderWritten(){
+  document.getElementById('pvTab').className='btn '+(writtenMode==='PV'?'btn-em':'btn-ghost');
+  document.getElementById('ebpTab').className='btn '+(writtenMode==='EBP'?'btn-em':'btn-ghost');
+  const arr=writtenMode==='PV'?pvPrompts:ebpPrompts;
+  document.getElementById('writtenPrompt').innerHTML=arr.map(p=>`<option>${p.t}</option>`).join('');
+  renderWrittenPrompt();
+}
+function renderWrittenPrompt(){
+  const arr=writtenMode==='PV'?pvPrompts:ebpPrompts;
+  const sel=arr.find(p=>p.t===document.getElementById('writtenPrompt').value)||arr[0];
+  document.getElementById('writtenBrief').innerHTML=`<div class="notice">${sel.f}</div>`;
+  if(writtenMode==='PV'){
+    document.getElementById('writtenFramework').innerHTML='<b style="color:var(--em);">1.</b> Patient safety first → <b style="color:var(--em);">2.</b> NMC Code / professional behaviour → <b style="color:var(--em);">3.</b> Escalate to senior → <b style="color:var(--em);">4.</b> Factual documentation → <b style="color:var(--em);">5.</b> Confidentiality → <b style="color:var(--em);">6.</b> Formal reporting → <b style="color:var(--em);">7.</b> Reflect and learn';
+    document.getElementById('writtenChecklist').innerHTML=['Patient safety stated first','Professional and non-judgemental','Escalated to appropriate senior','Documentation — factual','Confidentiality maintained','NMC Code language used','Formal reporting mentioned','Reflection included','Completed within 10 minutes'].map(x=>`<label class="check"><input type="checkbox"><span>${x}</span></label>`).join('');
+  }else{
+    document.getElementById('writtenFramework').innerHTML='<b style="color:var(--blue);">1.</b> Identify topic → <b style="color:var(--blue);">2.</b> Summarise evidence → <b style="color:var(--blue);">3.</b> Quality/reliability → <b style="color:var(--blue);">4.</b> Limitations → <b style="color:var(--blue);">5.</b> NICE/local policy → <b style="color:var(--blue);">6.</b> Patient preference → <b style="color:var(--blue);">7.</b> Safe nursing conclusion';
+    document.getElementById('writtenChecklist').innerHTML=['Identified the clinical topic','Summarised evidence','Commented on quality','Limitations/bias mentioned','NICE/policy referenced','Patient preference included','Safe conclusion made','Did NOT say change practice from one study','Completed within 10 minutes'].map(x=>`<label class="check"><input type="checkbox"><span>${x}</span></label>`).join('');
+  }
+}
+function randomWritten(){writtenMode=Math.random()<.5?'PV':'EBP';renderWritten();const arr=writtenMode==='PV'?pvPrompts:ebpPrompts;document.getElementById('writtenPrompt').value=arr[Math.floor(Math.random()*arr.length)].t;renderWrittenPrompt();}
+function copyFramework(){navigator.clipboard?.writeText(document.getElementById('writtenFramework').textContent).then(()=>alert('Copied.'));}
+function saveWrittenAttempt(){state.writtenAttempts.push({date:new Date().toLocaleString(),mode:writtenMode,prompt:document.getElementById('writtenPrompt').value,answer:document.getElementById('writtenAnswer').value});save();alert('Saved.');}
+
+// ── PLAN ─────────────────────────────────────────────────
+function renderPlan(){
+  document.getElementById('weekPlan').innerHTML=weekData.map((w,wi)=>`
+    <details class="week-acc" ${wi===0?'open':''}>
+      <summary><span>${w.w}: ${w.theme}</span><span class="pill pill-blue">${w.days.filter((_,di)=>state.done[wi+'-'+di]).length}/${w.days.length} done</span></summary>
+      <div class="inside" style="padding:10px;">${w.days.map((d,di)=>`<div class="day-row ${state.done[wi+'-'+di]?'done':''}">
+        <div><div class="day-label">${d[0]}</div><div class="tiny muted">${d[2]}</div></div>
+        <div><div class="day-title">${d[1].split('.')[0]}</div><div class="day-tasks">${d[1]}</div></div>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:11px;color:var(--muted);white-space:nowrap;"><input type="checkbox" ${state.done[wi+'-'+di]?'checked':''} onchange="state.done['${wi}-${di}']=this.checked;save();renderPlan()" style="accent-color:var(--em);width:14px;height:14px;"> Done</label>
+      </div>`).join('')}</div></details>`).join('');
+}
+function expandAllWeeks(open){document.querySelectorAll('.week-acc').forEach(w=>w.open=open);}
+
+// ── MISTAKES ─────────────────────────────────────────────
+function addMistake(){
+  const obj={date:new Date().toLocaleString(),station:document.getElementById('mStation').value,severity:document.getElementById('mSeverity').value,mistake:document.getElementById('mMistake').value,fix:document.getElementById('mFix').value,repeat:document.getElementById('mDate').value,status:document.getElementById('mStatus').value};
+  if(!obj.station||!obj.mistake){alert('Fill in Station and What happened.');return;}
+  state.mistakes.push(obj);['mStation','mMistake','mFix','mDate'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  save();renderMistakes();
+}
+function renderMistakes(){
+  const open=state.mistakes.filter(m=>m.status!=='Fixed').length;
+  const c=document.getElementById('mistakeCount');if(c)c.textContent=open+' open';
+  const t=document.getElementById('mistakeTable');if(!t)return;
+  t.innerHTML=state.mistakes.length?`<div style="overflow-x:auto;"><table><thead><tr><th>Station</th><th>Severity</th><th>Mistake/Fix</th><th>Status</th></tr></thead><tbody>${state.mistakes.map((m,i)=>`<tr>
+    <td><b>${m.station||'—'}</b><br><span class="tiny muted">${m.date}${m.repeat?'<br>↺ '+m.repeat:''}</span></td>
+    <td><span class="pill ${m.severity.includes('Serious')?'pill-red':m.severity==='Moderate'?'pill-amber':'pill-em'}">${m.severity}</span></td>
+    <td style="max-width:200px;font-size:11px;line-height:1.5;"><b>What:</b> ${m.mistake||'—'}<br><b>Fix:</b> ${m.fix||'—'}</td>
+    <td><select onchange="state.mistakes[${i}].status=this.value;save();renderMistakes()"><option ${m.status==='Open'?'selected':''}>Open</option><option ${m.status==='Repeated once'?'selected':''}>Repeated once</option><option ${m.status==='Fixed'?'selected':''}>Fixed</option></select>
+    <br><button class="btn btn-red" style="margin-top:4px;font-size:10px;padding:3px 7px;" onclick="state.mistakes.splice(${i},1);save();renderMistakes()">Del</button></td>
+  </tr>`).join('')}</tbody></table></div>`:'<p class="small muted" style="padding:10px 0;">No mistakes logged yet.</p>';
+}
+function clearMistakes(){if(confirm('Clear all?')){state.mistakes=[];save();renderMistakes();}}
+function exportMistakes(){const rows=[['Date','Station','Severity','Mistake','Fix','Repeat','Status'],...state.mistakes.map(m=>[m.date,m.station,m.severity,m.mistake,m.fix,m.repeat,m.status])];const csv=rows.map(r=>r.map(x=>'"'+String(x||'').replaceAll('"','""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='osce_mistakes.csv';a.click();}
+
+// ── READING ───────────────────────────────────────────────
+function renderReading(){
+  document.getElementById('readingMap').innerHTML=reading.map((r,ri)=>`<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;font-size:14px;">${r.doc}</h3><span class="pill pill-blue">${r.items.filter((_,ii)=>state.reading[ri+'-'+ii]).length}/${r.items.length}</span></div>
+    <div class="checklist">${r.items.map((it,ii)=>{const k=ri+'-'+ii;return `<label class="check"><input type="checkbox" ${state.reading[k]?'checked':''} onchange="state.reading['${k}']=this.checked;save();renderReading()"><span>${it}</span></label>`;}).join('')}</div>
+  </div>`).join('');
+}
+
+// ── FLASHCARDS ────────────────────────────────────────────
+let flashIdx=-1,flashFlipped=false,flashOrder=[];
+function shuffleFlash(){flashOrder=[...Array(flashcards.length).keys()].sort(()=>Math.random()-.5);flashIdx=-1;nextFlash();}
+function nextFlash(){
+  if(!flashOrder.length)shuffleFlash();
+  flashIdx=(flashIdx+1)%flashOrder.length;
+  const card=flashcards[flashOrder[flashIdx]];
+  document.getElementById('flashCard').textContent=card.q;
+  const ans=document.getElementById('flashAnswer');ans.textContent=card.a;ans.className='flash-answer';
+  document.getElementById('flashCounter').textContent=`Card ${flashIdx+1} of ${flashcards.length}`;
+  document.getElementById('flashBar').style.width=((flashIdx+1)/flashcards.length*100)+'%';
+  document.getElementById('flashProgress').textContent=`${flashIdx+1} / ${flashcards.length}`;
+  flashFlipped=false;
+}
+function flipFlash(){flashFlipped=!flashFlipped;document.getElementById('flashAnswer').className='flash-answer'+(flashFlipped?' show':'');}
+
+// ── INIT ──────────────────────────────────────────────────
+renderScenarioCards();
+renderStationTypeCards();
+renderReadiness();
+renderPlan();
+renderSkillsList();
+renderWritten();
+renderMistakes();
+renderReading();
+renderNEWS2();
+renderDCScore();
+renderStats();
+shuffleFlash();
+buildMock();
+</script>
+</body>
+</html>
